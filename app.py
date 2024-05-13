@@ -1,13 +1,8 @@
-<<<<<<< HEAD
-from flask import Flask
-from flask import render_template , request
-=======
 from flask import Flask, redirect, render_template, request, session, url_for
 from flask_session import Session
 from src.User import User
 from src.lat_lng_finder import get_lat_lng
 import datetime
->>>>>>> 436dcf79404b3e44b4bd0b4652eff6ffec3623b0
 
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -23,11 +18,6 @@ default_lng = 139.6500
 
 @app.route('/')
 def login():
-<<<<<<< HEAD
-    return render_template(
-        'login.html'
-    )
-=======
     return render_template('login.html')
 
 # static/js/map.js, templates/mymap.html, src/lat_lng_finder.py, app.pyのmap_page()を追加
@@ -77,9 +67,6 @@ def map_page():
 
     # マップページをレンダリング
     return render_template("mymap.html", google_map_key=GOOGLE_MAP_KEY)
-
-    
->>>>>>> 436dcf79404b3e44b4bd0b4652eff6ffec3623b0
 
 @app.route('/mymap')
 def mymap():
