@@ -1,5 +1,6 @@
 from flask import Flask, redirect, render_template, request, session, url_for
 from flask_session import Session
+from src import firebase_db
 from src.User import User
 from src.lat_lng_finder import get_lat_lng
 import datetime
@@ -46,8 +47,7 @@ def map_page():
             locationid = "fake id" #ここ変える
             map_marker = {"label": label, "lat": float(lat), "lng": float(lng), "description": description, 'date': ts, 'locationid': locationid}
             # Firestoreにマーカー情報を保存
-
-            # dbにほぞんここ
+            firebase_db.save_marker_to_firestore(map_marker, user.UserID, locationid)
 
             # セッションにマーカー情報を保存
             session["lat"], session["lng"] = lat, lng

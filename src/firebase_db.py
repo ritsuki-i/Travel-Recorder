@@ -1,6 +1,8 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+import json
+import datetime
 
 # ===================== Firebase =====================================
 # このPythonファイルと同じ階層に認証ファイル(秘密鍵)を配置して、ファイル名を格納
@@ -32,13 +34,15 @@ def save_marker_to_firestore(marker_info,Id):
     markers_ref = db.collection(collectionName).document(Id).collection(colectionLocate)  
 
     # マーカー情報をFirestoreに保存
-    markers_ref.add({
+    markers_ref.set({
         'label': marker_info['label'],
         'lat': marker_info['lat'],
         'lng': marker_info['lng'],
-        'description': marker_info['description']
+        'description': marker_info['description'],
+        'date':marker_info['date'],
+        'locationid':str(marker_info['locationid'])
     })
-
+    
 #Cloud Firestoreのサブコレクションにある全てのドキュメントの情報をすべて取得
 def get_allmarker_to_firestore(Id):
     docs = db.collection(collectionName).document(Id).collection(colectionLocate).stream()
@@ -46,7 +50,6 @@ def get_allmarker_to_firestore(Id):
         #Firestoreから取得したドキュメントを辞書のリストとして格納
         docs_list.append(doc.to_dict())
         #print(f"{doc.id} => {doc.to_dict()}")
-    print(docs_list)
     return docs_list  #全てのドキュメントの情報を辞書のリスト形式で返す
         
 #Cloud Firestoreのサブコレクションにある各ドキュメントの情報をすべて取得
@@ -59,6 +62,13 @@ def get_marker_to_firestore(Id,LocationId):
     else:
         print("No such document!")
 
+def delete_marker_from_firestore(Id, LocationId):
+    doc = db.collection(collectionName).document(Id).collection(colectionLocate).document(LocationId)
+    res = doc.delete()
+    if res:
+        print("Deleted")
+    else:
+        print("No such document!")
 
         
 #ex
@@ -74,7 +84,7 @@ description="hitoippai"
 marker= {"label": Lname, "lat": lat, "lng": lng, "description": description}
 LocationId="IZ0JM1G5m8bHOWLCNgP7"
 
-setUser(Id,passwd,mail)
-save_marker_to_firestore(marker,Id)
-get_allmarker_to_firestore(Id)
-get_marker_to_firestore(Id,LocationId)
+#setUser(Id,passwd,mail)
+#save_marker_to_firestore(marker,Id)
+#get_allmarker_to_firestore(Id)
+#get_marker_to_firestore(Id,LocationId)
