@@ -19,6 +19,7 @@ default_lng = 139.6500
 
 @app.route('/', methods=['GET'])
 def login():
+
     if request.method == 'GET':
         User.UserEmail =  None
         User.UserID =  None
