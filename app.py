@@ -1,4 +1,5 @@
-from flask import Flask, redirect, render_template, request, session, url_for
+from flask import Flask
+from flask import Flask, redirect, render_template, request, session, url_for, jsonify
 from flask_session import Session
 from src.User import User
 from src.lat_lng_finder import get_lat_lng
@@ -18,7 +19,36 @@ default_lng = 139.6500
 
 @app.route('/', methods=['GET'])
 def login():
-    return render_template('login.html')
+
+    if request.method == 'GET':
+        User.UserEmail =  None
+        User.UserID =  None
+        return render_template(
+        'login.html'
+    )
+    else:
+        return render_template(
+            'login.html'
+        )
+
+
+@app.route('/toMyMap', methods=['GET','POST'])
+def toMyMap():
+    if request.method == 'GET':
+        if user.UserEmail !=  None and user.UserID !=  None:
+            session["user_id"] = user.UserID
+            session["user_email"] = user.UserEmail
+            return redirect('/my-map')
+        else:
+            return render_template(
+                'login.html'
+            )
+    else:
+        userData = request.json
+        user.UserEmail = userData['User']['email']
+        user.UserID = userData['User']['uid']
+        return jsonify({'message': 'Success'})
+    
 
 # static/js/map.js, templates/mymap.html, src/lat_lng_finder.py, app.pyのmap_page()を追加
 # 今の時点でデータベースに入れるのは[ 緯度, 経度, ユーザが入力した名前, ユーザが入力したデスクリプション ]
@@ -66,9 +96,20 @@ def map_page():
             )
 
     # マップページをレンダリング
-    return render_template("mymap.html", google_map_key=GOOGLE_MAP_KEY)
+    return render_template("mymap.html", google_map_key=GOOGLE_MAP_KEY) 
 
-    
+
+@app.route('/CreateAccount', methods=['GET','POST'])
+def CreateAccount():
+    return render_template(
+        'createAccount.html'
+    )
+
+@app.route('/ChangePassword', methods=['GET','POST'])
+def ChangePassword():
+    return render_template(
+        'ChangePassword.html'
+    )
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
