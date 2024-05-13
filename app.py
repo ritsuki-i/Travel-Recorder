@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import Flask, redirect, render_template, request, session, url_for, jsonify
 from flask_session import Session
+from src import firebase_db
 from src.User import User
 from src.lat_lng_finder import get_lat_lng
 import datetime
@@ -17,7 +18,7 @@ default_lat = 35.6764
 default_lng = 139.6500
 
 
-@app.route('/', methods=['GET'])
+@app.route('/')
 def login():
 
     if request.method == 'GET':
@@ -76,8 +77,7 @@ def map_page():
             locationid = "fake id" #ここ変える
             map_marker = {"label": label, "lat": float(lat), "lng": float(lng), "description": description, 'date': ts, 'locationid': locationid}
             # Firestoreにマーカー情報を保存
-
-            # dbにほぞんここ
+            firebase_db.save_marker_to_firestore(map_marker, user.UserID, locationid)
 
             # セッションにマーカー情報を保存
             session["lat"], session["lng"] = lat, lng
@@ -98,7 +98,6 @@ def map_page():
     # マップページをレンダリング
     return render_template("mymap.html", google_map_key=GOOGLE_MAP_KEY) 
 
-
 @app.route('/CreateAccount', methods=['GET','POST'])
 def CreateAccount():
     return render_template(
@@ -112,4 +111,4 @@ def ChangePassword():
     )
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(debug=True)
