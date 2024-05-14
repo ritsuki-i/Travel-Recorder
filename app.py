@@ -5,13 +5,17 @@ from src import firebase_db
 from src.User import User
 from src.lat_lng_finder import get_lat_lng
 import datetime
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 user = User()
 
-GOOGLE_MAP_KEY = "AIzaSyBKOqBE1tCLB4_ruwU8WVyCuDRN0exE_xo"
+# .env ファイルを読み込む
+load_dotenv()
+GOOGLE_MAP_KEY = os.getenv('GOOGLE_MAP_KEY')
 
 # デフォルトの緯度と経度を設定
 default_lat = 35.6764
