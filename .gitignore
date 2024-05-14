@@ -1,7 +1,6 @@
-./flask_session
+flask_session/
 travel-recorder-21178-firebase-adminsdk-xg0w1-b97284987e.json
 loginapi.json
-./.idea
-*.idea
+.idea/
 *.xml
 *.env
