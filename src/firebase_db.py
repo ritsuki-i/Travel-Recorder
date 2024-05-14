@@ -8,10 +8,11 @@ import datetime
 # このPythonファイルと同じ階層に認証ファイル(秘密鍵)を配置して、ファイル名を格納
 #githubから見えないようにするためのもの
 try:
-    JSON_PATH = "/etc/secrets/travel-recorder-21178-firebase-adminsdk-xg0w1-b97284987e.json"
+    with open("/etc/secrets/travel-recorder-21178-firebase-adminsdk-xg0w1-b97284987e.json", 'r') as file:
+        JSON_PATH = "/etc/secrets/travel-recorder-21178-firebase-adminsdk-xg0w1-b97284987e.json"
 except FileNotFoundError:
     #discordからダウンロードしてね
-    JSON_PATH = "static/js/travel-recorder-21178-firebase-adminsdk-xg0w1-b97284987e.json"
+    JSON_PATH = "./static/js/travel-recorder-21178-firebase-adminsdk-xg0w1-b97284987e.json"
 
 # Firebase初期化
 cred = credentials.Certificate(JSON_PATH)
