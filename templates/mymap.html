@@ -82,6 +82,17 @@
 
   </div>
 
+  <script>
+      let mapParams = {
+        lat: {{ lat }},
+        lng: {{ lng }},
+        zoom: 15,
+        googleMapKey: "{{ google_map_key }}",
+        mapMarkers: {{ marker_list | tojson | safe }}
+      };
+  </script>
+  <!-- Googleマップを操作するためのJavaScriptファイル -->
+  <script src="../static/js/viewMap.js"></script>
 
 </body>
 

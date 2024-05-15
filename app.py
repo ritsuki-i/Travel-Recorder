@@ -114,5 +114,13 @@ def ChangePassword():
         'ChangePassword.html'
     )
 
+@app.route('/logout', methods=['POST'])
+def logout():
+    # セッションの全てのキーを削除
+    for key in list(session.keys()):
+        session.pop(key)
+    # ログインページにリダイレクト
+    return redirect(url_for('login'))
+
 if __name__ == "__main__":
     app.run(debug=True)
