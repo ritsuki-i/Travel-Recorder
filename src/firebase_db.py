@@ -8,7 +8,15 @@ from User import User
 
 # ===================== Firebase =====================================
 # このPythonファイルと同じ階層に認証ファイル(秘密鍵)を配置して、ファイル名を格納
-JSON_PATH = 'static\js\pytest-bf0f6-firebase-adminsdk-8xy33-9a264f3956.json'
+#githubから見えないようにするためのもの
+try:
+    with open("/etc/secrets/travel-recorder-21178-firebase-adminsdk-xg0w1-b97284987e.json", 'r') as file:
+        JSON_PATH = "/etc/secrets/travel-recorder-21178-firebase-adminsdk-xg0w1-b97284987e.json" #ここかえて！！
+except FileNotFoundError:
+    #discordからダウンロードしてね♡
+    JSON_PATH = "../static/js/travelrecorder-1c617-firebase-adminsdk-fyjsn-0fc3b50694.json"
+
+
 
 # Firebase初期化
 cred = credentials.Certificate(JSON_PATH)
@@ -48,7 +56,7 @@ def save_marker_to_firestore(marker_info,userID,locationid):
     })
     
 #Cloud Firestoreのサブコレクションにある全てのドキュメントの情報をすべて取得
-def get_allmarker_to_firestore(Id):
+def get_allmarker_from_firestore(Id):
     docs = db.collection(collectionName).document(Id).collection(colectionLocate).stream()
     for doc in docs:
         #Firestoreから取得したドキュメントを辞書のリストとして格納
@@ -57,8 +65,8 @@ def get_allmarker_to_firestore(Id):
     return docs_list  #全てのドキュメントの情報を辞書のリスト形式で返す
         
 #Cloud Firestoreのサブコレクションにある各ドキュメントの情報をすべて取得
-def get_marker_to_firestore(Id,LocationId):
-    doc_ref = db.collection(collectionName).document(Id).collection(colectionLocate).document(LocationId)
+def get_marker_from_firestore(Id):
+    doc_ref = db.collection(collectionName).document(Id).collection(colectionLocate).stream()
     doc = doc_ref.get()
     if doc.exists:
         print(f"Document data: {doc.to_dict()}")
@@ -76,7 +84,7 @@ def delete_marker_from_firestore(Id, LocationId):
 
 #ex
 User=User()
-User.UserID="15822098" #<-自動で割当？ 
+User.UserID="15822096" #<-自動で割当？ 
 
 User.UserEmail="15822097@aoyama.jp"
 
@@ -92,7 +100,7 @@ LocationId="IZ0JM1G5m8bHOWLCNgP7"
 marker= {"label": Lname, "lat": lat, "lng": lng, "description": description, "date":ts,"locationid":LocationId}
 
 
-setUser(User)
-save_marker_to_firestore(marker,User.UserID,LocationId)
-get_allmarker_to_firestore(User.UserID)
-get_marker_to_firestore(User.UserID,LocationId)
+#setUser(User)
+#save_marker_to_firestore(marker,User.UserID,LocationId)
+#get_allmarker_to_firestore(User.UserID)
+#get_marker_from_firestore(User.UserID)
