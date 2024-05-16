@@ -1,12 +1,14 @@
 import firebase_admin
 from firebase_admin import credentials
-from firebase_admin import firestore
+from firebase_admin import firestore,storage
 import json
 import datetime
 
+from User import User
+
 # ===================== Firebase =====================================
 # このPythonファイルと同じ階層に認証ファイル(秘密鍵)を配置して、ファイル名を格納
-JSON_PATH = 'static\js\pytest-bf0f6-firebase-adminsdk-8xy33-9a264f3956.json'
+JSON_PATH = r"C:\Users\hamo\Dropbox\PC\Documents\GitHub\Travel-Recorder\static\js\travelrecorder-1c617-firebase-adminsdk-fyjsn-0fc3b50694.json"
 
 # Firebase初期化
 cred = credentials.Certificate(JSON_PATH)
@@ -20,18 +22,20 @@ colectionLocate="location" # 'location'-->サブコレクション名
 docs_list = [] #<-マップマーカー用辞書のリスト
 
 
+
+
 #Cloud Firestoreのコレクションに個人のデータを格納
-def setUser(Id,passwd,mail):
-    doc_ref=db.collection(collectionName).document(Id)
+def setUser(User):
+    doc_ref=db.collection(collectionName).document(User.UserID)
     doc_ref.set({
-        u'passwd': passwd,
-        u'mail': mail
+        u'Email': User.UserEmail,
+        u'Id': User.UserID
     })
     
 #Cloud Firestoreのサブコレクションにマーカー情報を格納
-def save_marker_to_firestore(marker_info,Id):
+def save_marker_to_firestore(marker_info,userID,locationid):
     db = firestore.client()
-    markers_ref = db.collection(collectionName).document(Id).collection(colectionLocate)  
+    markers_ref = db.collection(collectionName).document(str(userID)).collection(colectionLocate).document(str(locationid))  
 
     # マーカー情報をFirestoreに保存
     markers_ref.set({
@@ -70,21 +74,25 @@ def delete_marker_from_firestore(Id, LocationId):
     else:
         print("No such document!")
 
-        
 #ex
-Id="15822097" #<-自動で割当？ 
-passwd="15822097"
-mail="15822097@aoyama.jp"
+User=User()
+User.UserID="15822098" #<-自動で割当？ 
+
+User.UserEmail="15822097@aoyama.jp"
 
 Lname="Shinjuku"
 lat=135
 lng=68
 description="hitoippai"
-#マップマーカーの辞書
-marker= {"label": Lname, "lat": lat, "lng": lng, "description": description}
+date = datetime.datetime.now()
+ts = datetime.datetime.timestamp(date)
 LocationId="IZ0JM1G5m8bHOWLCNgP7"
+#マップマーカーの辞書
 
-#setUser(Id,passwd,mail)
-#save_marker_to_firestore(marker,Id)
-#get_allmarker_to_firestore(Id)
-#get_marker_to_firestore(Id,LocationId)
+marker= {"label": Lname, "lat": lat, "lng": lng, "description": description, "date":ts,"locationid":LocationId}
+
+
+setUser(User)
+save_marker_to_firestore(marker,User.UserID,LocationId)
+get_allmarker_to_firestore(User.UserID)
+get_marker_to_firestore(User.UserID,LocationId)
