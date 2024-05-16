@@ -6,14 +6,94 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="../static/js/Authentication.js" defer type="module"></script>
-
   <title>TravelRecorder</title>
 </head>
 
 <body>
-  <h1>mymap</h1>
 
-  
+  <p id="user_email">{{ session["user_email"] }}</p>
+  <p id="user_id" style="display: none">{{ session["user_id"] }}</p>
+
+  <div id="header">
+    <div id="lefthalf">TravelRecorderkari</div>
+    <div id="righthalf">
+      <form id="logout-form" action="/logout" method="post">
+        <button id="logout-btn" type="submit">ログアウト</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="container">
+
+    <div id="searchstyling">
+      <!-- 場所検索用のフォーム -->
+      <form action="/my-map" method="POST">
+        <input type="hidden" name="form_type" value="search_location">
+        <label for="location">場所検索：</label>
+        <input type="text" name="location" id="location" placeholder="場所名">
+        <input type="submit" value="Search">
+      </form>
+
+      <button type="button" id="link-btn">マップを共有する</button>
+
+      <!-- marker listを表示 april 6 Ian-->
+      {% if session["marker_list"] %}
+      <table id="detail-table-pc">
+        <thead>
+          <tr>
+            <th scope="col" data-column="label" data-order="asc">Name</th>
+            <th scope="col" data-column="description" data-order="asc">Description</th>
+            <th scope="col" data-column="date" data-order="asc">Time Created</th>
+          </tr>
+        </thead>
+        {% for marker in session["marker_list"] %}
+        <tr id="marker-row-{{ marker['locationid'] }}" onclick="centerMapOnMarker({{ marker['lat'] }}, {{ marker['lng'] }})">
+          <th scope="col">{{ marker["label"] }}</th>
+          <th scope="col">{{ marker["description"] }}</th>
+          <th scope="col">{{ marker["date"] | get_date_time }}</th>
+        </tr>
+        {% endfor %}
+      </table>
+
+      <table id="detail-table-phone">
+        <thead>
+          <tr>
+            <th scope="col" class="name">Name</th>
+            <th scope="col" class="description">Description</th>
+          </tr>
+        </thead>
+        {% for marker in session["marker_list"] %}
+        <tr>
+          <th scope="col" class="name">{{ marker["label"] }}</th>
+          <th scope="col" class="description">{{ marker["description"] }}</th>
+        </tr>
+        {% endfor %}
+      </table>
+      {% endif %}
+      <p id="phone-margin"></p>
+
+
+    </div>
+
+    <div id="mapstyling">
+      <!-- Googleマップを表示するためのdiv -->
+      <div id="map"></div>
+    </div>
+
+  </div>
+
+  <script>
+      let mapParams = {
+        lat: {{ lat }},
+        lng: {{ lng }},
+        zoom: 15,
+        googleMapKey: "{{ google_map_key }}",
+        mapMarkers: {{ marker_list | tojson | safe }}
+      };
+  </script>
+  <!-- Googleマップを操作するためのJavaScriptファイル -->
+  <script src="../static/js/viewMap.js"></script>
+
 </body>
 
 </html>

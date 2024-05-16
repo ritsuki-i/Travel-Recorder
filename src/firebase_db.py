@@ -8,7 +8,7 @@ from User import User
 
 # ===================== Firebase =====================================
 # このPythonファイルと同じ階層に認証ファイル(秘密鍵)を配置して、ファイル名を格納
-JSON_PATH = r"C:\Users\hamo\Dropbox\PC\Documents\GitHub\Travel-Recorder\static\js\travelrecorder-1c617-firebase-adminsdk-fyjsn-0fc3b50694.json"
+JSON_PATH = 'static\js\pytest-bf0f6-firebase-adminsdk-8xy33-9a264f3956.json'
 
 # Firebase初期化
 cred = credentials.Certificate(JSON_PATH)

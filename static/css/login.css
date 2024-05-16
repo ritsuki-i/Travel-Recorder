@@ -1,0 +1,271 @@
+@charset "UTF-8";
+body{
+    margin:0;
+    background: linear-gradient(to right, #004f80,#008080 );
+    /*background: linear-gradient(to right, #006080,#008080 );*/
+    overflow-x: hidden; /*横スクロールバー隠す*/
+    
+}
+
+
+.waves {
+    position: fixed; /* 要素をページの固定位置に配置 */
+    bottom: 0; /* ページの下端に配置 */
+    left: 0; /* ページの左端に配置 */
+    width: 100%; /* ページの幅いっぱいに広がる */
+    height: 150px; /* 波の高さ */
+    background: url('wave.png') repeat-x; /* 波の背景画像を設定し、水平方向に繰り返し */
+    animation: wave-animation 15s linear infinite; /* 波のアニメーションを設定 */
+    z-index: -1; /* 背景よりも下に配置する */
+}
+
+.parallax > use {
+    animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;
+  }
+  .parallax > use:nth-child(1) {
+    animation-delay: -2s;
+    animation-duration: 7s;
+  }
+  .parallax > use:nth-child(2) {
+    animation-delay: -3s;
+    animation-duration: 10s;
+  }
+  .parallax > use:nth-child(3) {
+    animation-delay: -4s;
+    animation-duration: 13s;
+  }
+  .parallax > use:nth-child(4) {
+    animation-delay: -5s;
+    animation-duration: 20s;
+  }
+  @keyframes move-forever {
+    0% {
+     transform: translate3d(-90px,0,0);
+    }
+    100% { 
+      transform: translate3d(85px,0,0);
+    }
+  }
+
+#header{
+   border-bottom:solid 1px  ivory;
+   height: 50px;
+}
+#header image{
+    width:10%;
+    height:10%;
+    
+}
+
+#menu ul{
+    list-style-type: none;
+    text-align: right;
+}
+
+#menu ul li{
+    display:inline-block;
+    width:150px;
+    padding:3px 0;
+    margin:4px 0;
+    vertical-align: middle;
+    text-align: center;
+    background-color:transparent;
+    font-size:medium;
+    font-family:'Courier New', Courier, monospace;
+    color:ivory;
+}
+
+#menu ul li a{
+    color:ivory;
+    text-decoration: none;
+
+}
+
+#menu ul li a:hover{
+    
+    transition-duration: 0.5s;
+    font-size:large;
+    
+    
+}
+
+
+#title{
+    margin:0 auto;
+    padding: 40px;
+    text-align:center;
+    font-weight:bold;
+    font-size: x-large;
+    font-family: 'Courier New', Courier, monospace;
+    color:ivory;
+
+}
+
+#title img{
+   position: relative;
+    width: 20%;
+    height: 20%;
+}
+
+.container{
+    display:flex;
+    flex-direction: column;
+    width:500px;
+    margin: 0 auto;
+    border:solid 1px ivory;
+
+}
+
+
+
+.bottom-section{
+    display:flex;
+    flex-direction: row;
+    height:100%;
+   
+}
+
+.left-half,.right-half{
+   display: flex;
+   flex:1;
+   background-color: teal;
+   justify-content: center;
+   align-items: center;
+  height: 40px;
+   
+    
+}
+
+.left-half{
+   border: solid 1px ivory;
+   border-bottom:none ;
+   border-left: none;
+  flex:2;
+
+}
+
+.right-half{
+  border-top: solid 1px ivory;
+
+}
+
+
+
+.EmailPassLogin{
+    padding-left: 25px;
+    padding-top:20px;
+    padding-bottom:10px;
+}
+
+
+
+
+.EmailLogin ,.PassLogin{
+    border: none; /* 枠を削除 */
+    border-bottom: 1px solid ivory; /* 下線を追加 */
+    background-color: transparent; /* 背景を透明にする */
+    color: ivory; /* テキストの色を設定 */
+    font-family: 'Courier New', Courier, monospace; /* フォントの設定 */
+    font-size: large; /* フォントサイズの設定 */
+    padding-left: 20px; /* 左側の余白を設定 */
+    padding-right:30px;
+    padding-top: 20px; /* 上側の余白を設定 */
+    margin-bottom: 20px; /* テキストボックスの下に余白を設定 */
+    width: 80%; /* 幅を設定 */
+    outline: none; /* フォーカス時の枠を削除 */
+    
+}
+
+.EmailLogin #LoginEmail,.PassLogin #LoginPass{
+    border: none;
+    background-color: transparent;
+    color: ivory; 
+    font-family: 'Courier New','Courier New', Courier, monospace;
+    outline:none;
+    width: 100%;
+}
+
+
+
+#login-emailpass{
+    
+    background-color: transparent; /* 背景を透明にする */
+    border: none;
+    color: ivory; /* テキストの色を設定 */
+    font-family: 'Courier New', Courier, monospace; /* フォントの設定 */
+    font-size: 16px; /* フォントサイズの設定 */
+  
+    cursor: pointer; /* マウスカーソルをポインターに変更 */
+    outline: none; /* フォーカス時の枠を削除 */
+  
+}
+
+
+#login-emailpass:hover {
+    transition-duration: 0.5s;
+    color:rgb(178, 232, 229);
+  }
+ 
+
+#login-google{
+    background-color: transparent; /* 背景を透明にする */
+    border: none; /* 枠を削除する */
+    color: ivory; /* テキストの色を設定 */
+    font-family: 'Courier New', Courier, monospace; /* フォントの設定 */
+    font-size: 16px; /* フォントサイズの設定 */
+    padding: 5px 5px; /* ボタンのパディングを設定 */
+    cursor: pointer; /* マウスカーソルをポインターに変更 */
+    outline: none; /* フォーカス時の枠を削除 */
+}
+
+#login-google:hover {
+    transition-duration: 0.5s;
+    color:rgb(178, 232, 229);
+}
+
+
+#Account{
+    background-color: transparent; 
+    border: none;
+    color: ivory;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    padding: 5px 5px;
+    cursor: pointer;
+    outline: none;
+    display: inline-block;
+    margin-right:10px;
+}
+
+#Account:hover {
+  transition-duration: 0.5s;
+  color:rgb(178, 232, 229);
+}
+
+
+.AccountBordering{
+    display: block;
+    width:500px;
+    margin:0 auto;
+    text-align: right;
+    padding-top: 10px;
+}
+
+@media screen and (max-width:500px) {
+  .container, .AccountBordering, .waves{
+    width: 100vw;
+  }
+  #menu ul li{
+    width: 23vw;
+  }
+  ul{
+    padding-inline-start: 0px;
+  }
+  #Account{
+    color: black;
+    font-weight: bold;
+  }
+  #title{
+    padding: 30px;
+  }
+}
