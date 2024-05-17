@@ -8,6 +8,9 @@
         <link rel="stylesheet" href="../static/css/login.css">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript">
+            window.firebaseConfig = {{ loginapi_json_value | tojson }};
+        </script>
         <script src="../static/js/Authentication.js" defer type="module"></script>
         
     </head>
@@ -97,6 +100,9 @@
             </form>
 
        </div>    
+       <script type="module">
+            const firebaseConfig = {{ loginapi_json_value | tojson }};
+        </script>
 
 
       

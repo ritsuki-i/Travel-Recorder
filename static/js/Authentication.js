@@ -10,9 +10,9 @@ import {
   sendPasswordResetEmail,
 } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
 
-import firebaseConfig from "./loginapi.json" assert { type: "json" };
+/*import firebaseConfig from "./loginapi.json" assert { type: "json" };*/
 
-
+const firebaseConfig = window.firebaseConfig;
 const app = initializeApp(firebaseConfig);
 
 const provider_google = new GoogleAuthProvider();
@@ -99,6 +99,7 @@ CreateAccount?.addEventListener("click", function () {
         sendEmailVerification(auth.currentUser)
           .then(() => {
             alert("メールアドレス確認用のメールを送信しました。承認してください。");
+            window.location.href = "/";
           });
       })
       .catch((error) => {
