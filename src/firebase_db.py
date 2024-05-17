@@ -14,7 +14,7 @@ try:
         JSON_PATH = "/etc/secrets/travel-recorder-21178-firebase-adminsdk-xg0w1-b97284987e.json" #ここかえて！！
 except FileNotFoundError:
     #discordからダウンロードしてね♡
-    JSON_PATH = "../static/js/travelrecorder-1c617-firebase-adminsdk-fyjsn-0fc3b50694.json"
+    JSON_PATH = "static/js/travelrecorder-1c617-firebase-adminsdk-fyjsn-0fc3b50694.json"
 
 
 
