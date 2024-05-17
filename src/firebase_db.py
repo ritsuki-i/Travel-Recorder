@@ -4,14 +4,14 @@ from firebase_admin import firestore,storage
 import json
 import datetime
 
-from src.User import User
+from .User import User
 
 # ===================== Firebase =====================================
 # このPythonファイルと同じ階層に認証ファイル(秘密鍵)を配置して、ファイル名を格納
 #githubから見えないようにするためのもの
 try:
-    with open("/etc/secrets/travel-recorder-21178-firebase-adminsdk-xg0w1-b97284987e.json", 'r') as file:
-        JSON_PATH = "/etc/secrets/travel-recorder-21178-firebase-adminsdk-xg0w1-b97284987e.json" #ここかえて！！
+    with open("/etc/secrets/travelrecorder-1c617-firebase-adminsdk-fyjsn-0fc3b50694.json", 'r') as file:
+        JSON_PATH = "/etc/secrets/travelrecorder-1c617-firebase-adminsdk-fyjsn-0fc3b50694.json" #ここかえて！！
 except FileNotFoundError:
     #discordからダウンロードしてね♡
     JSON_PATH = "static/js/travelrecorder-1c617-firebase-adminsdk-fyjsn-0fc3b50694.json"
