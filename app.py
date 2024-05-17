@@ -20,13 +20,12 @@ user = User()
 GOOGLE_MAP_KEY = os.getenv('GOOGLE_MAP_KEY')
 
 try:
-    with open("/etc/secrets/loginapi.json", 'r'):
-        JSON_PATH = "/etc/secrets/loginapi.json"
+    with open("/etc/secrets/loginapi.json", 'r') as file:
+        loginapi_json_value = json.load(file)
 except FileNotFoundError:
-    #discordからダウンロードしてね♡
-    JSON_PATH = "./static/js/loginapi.json"
-loginapi_json = open(JSON_PATH, 'r')
-loginapi_json_value = json.load(loginapi_json)
+    # discordからダウンロードしてね♡
+    with open("./static/js/loginapi.json", 'r') as file:
+        loginapi_json_value = json.load(file)
 
 # デフォルトの緯度と経度を設定
 default_lat = 35.6764
