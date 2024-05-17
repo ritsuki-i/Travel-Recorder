@@ -4,7 +4,7 @@ from firebase_admin import firestore
 import json
 import datetime
 
-from src.User import User
+from .User import User
 
 # ===================== Firebase =====================================
 # このPythonファイルと同じ階層に認証ファイル(秘密鍵)を配置して、ファイル名を格納
