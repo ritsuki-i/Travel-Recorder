@@ -20,7 +20,7 @@ user = User()
 GOOGLE_MAP_KEY = os.getenv('GOOGLE_MAP_KEY')
 
 try:
-    with open("/etc/secrets/loginapi.json", 'r') as file:
+    with open("/etc/secrets/loginapi.json", 'r'):
         JSON_PATH = "/etc/secrets/loginapi.json"
 except FileNotFoundError:
     #discordからダウンロードしてね♡
