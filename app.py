@@ -6,7 +6,7 @@ from src.lat_lng_finder import get_lat_lng
 import datetime
 import os
 import uuid
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import json
 from google.api_core.datetime_helpers import DatetimeWithNanoseconds
 
