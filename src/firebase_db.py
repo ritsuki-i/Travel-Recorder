@@ -18,6 +18,7 @@ except FileNotFoundError:
 
 
 
+
 # Firebase初期化
 cred = credentials.Certificate(JSON_PATH)
 firebase_admin.initialize_app(cred)
