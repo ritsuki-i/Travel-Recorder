@@ -166,3 +166,7 @@ table:hover {
    flex-wrap: wrap;
  }
  
+ .marker-image {
+   width: 100px; /* 画像の幅を指定 */
+   height: auto; /* 高さは自動調整 */
+}
