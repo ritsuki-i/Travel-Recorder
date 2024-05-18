@@ -288,6 +288,8 @@ async function deleteMarker(locationid) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  /*イアン*/
+  /*
   const linkBtn = document.getElementById("link-btn");
   const infoBox = document.getElementById("info-box");
   const closeBtn = document.getElementsByClassName("close-btn")[0];
@@ -307,7 +309,23 @@ document.addEventListener("DOMContentLoaded", function () {
     if (event.target === infoBox) {
       infoBox.style.display = "none";
     }
-  });
+  });*/
+
+  /*りつき作*/ 
+  const linkBtn = document.getElementById("link-btn");
+  const userId = document.getElementById("user-id").textContent;
+
+  if (userId) {
+    linkBtn.addEventListener('click', async () => {
+          try {
+              await navigator.share({ title: document.title, url: "https://travel-recorder.onrender.com//view-map?user_id=" + userId });
+          } catch (error) {
+              console.error(error);
+          }
+      });
+  } else {
+      console.error('Element with id "user_id" not found.');
+  }
 });
 
 // Google Maps APIの読み込みを開始する
