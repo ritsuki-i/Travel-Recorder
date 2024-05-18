@@ -101,11 +101,6 @@ body{
 
 }
 
-#title img{
-   position: relative;
-    width: 20%;
-    height: 20%;
-}
 
 .container{
     display:flex;
