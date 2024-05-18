@@ -1,10 +1,13 @@
-
-
+@charset "UTF-8";
+html{
+   background: linear-gradient(to right, #004f80,#008080 );
+}
 body {
    margin: 0;
    height:1200px;
    /*background: linear-gradient(to bottom, #004f80,#008080 );*/
-   background-color: teal;
+   background: linear-gradient(to right, #004f80,#008080 );
+   /*background-color: teal;*/
    overflow-x: hidden;
    font-family: 'Courier New', Courier, monospace;
 }
@@ -84,7 +87,7 @@ p{
    color: ivory;
    font-weight: bold;
    flex: 1;
-   background-color:teal;
+   background-color:transparent;
 
 }
 
@@ -102,6 +105,11 @@ p{
    
 }
 
+
+#button-container{
+   margin-left: 10px;
+   margin-bottom:10px;
+}
 
 #map {
    height: 100%;
@@ -164,9 +172,52 @@ table:hover {
  #preview-container {
    display: flex;
    flex-wrap: wrap;
- }
- 
+ } 
  .marker-image {
-   width: 100px; /* 画像の幅を指定 */
+   width: 10px; /* 画像の幅を指定 */
    height: auto; /* 高さは自動調整 */
+   
 }
+
+.info-box {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+  padding-top: 60px;
+}
+
+.info-box-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+}
+
+.close-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#share-link {
+    padding: 8px 4px;
+    width: 95%;
+}
+
