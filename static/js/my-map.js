@@ -78,7 +78,7 @@ function dragOverHandler(event) {
 // Googleマップを初期化し、マーカーとインフォウィンドウを設定する関数
 function initMap(lat, lng, zoom) {
   //地図のスタイリング
-  const mapStyles=[
+  const mapStyles= [
     {
         "featureType": "landscape.natural",
         "elementType": "geometry.fill",
@@ -172,36 +172,36 @@ function initMap(lat, lng, zoom) {
   myMap = new google.maps.Map(document.getElementById("map"), {
     zoom: zoom,
     center: center,
-    styles: mapStyles//地図のスタイリング
+    styles: mapStyles //地図のスタイリング
   });
 
   // マップマーカーの情報があれば、マーカーをマップに追加.
   // Initialize and add markers
-    if (mapParams.mapMarkers) {
-      mapParams.mapMarkers.forEach((mapMarker) => {
-        let pinIcon = {
-            url: createSVGIcon(mapMarker.label)
-        };
+  if (mapParams.mapMarkers) {
+    mapParams.mapMarkers.forEach((mapMarker) => {
+      let pinIcon = {
+          url: createSVGIcon(mapMarker.label)
+      };
 
-        let marker = new google.maps.Marker({
-          position: {lat: parseFloat(mapMarker.lat), lng: parseFloat(mapMarker.lng)},
-          map: myMap,
-          icon: pinIcon,
-          label: mapMarker.label ? mapMarker.label : 'No Label'
-        });
-
-        // Add click listener to each marker
-         marker.addListener('click', () => {
-            const contentString = `<div>
-                <p><strong>Name:</strong> ${mapMarker.label ? mapMarker.label : 'No Label'}</p>
-                <p><strong>Description:</strong> ${mapMarker.description ? mapMarker.description : 'No Description'}</p>
-                <button onclick="deleteMarker('${mapMarker.locationid}')">Delete Marker</button>
-            </div>`;
-
-            infoWindow.setContent(contentString);
-            infoWindow.open(myMap, marker);
-        });
+      let marker = new google.maps.Marker({
+        position: {lat: parseFloat(mapMarker.lat), lng: parseFloat(mapMarker.lng)},
+        map: myMap,
+        icon: pinIcon,
+        label: mapMarker.label ? mapMarker.label : 'No Label'
       });
+
+      // Add click listener to each marker
+       marker.addListener('click', () => {
+          const contentString = `<div>
+              <p><strong>Name:</strong> ${mapMarker.label ? mapMarker.label : 'No Label'}</p>
+              <p><strong>Description:</strong> ${mapMarker.description ? mapMarker.description : 'No Description'}</p>
+              <button onclick="deleteMarker('${mapMarker.locationid}')">Delete Marker</button>
+          </div>`;
+
+          infoWindow.setContent(contentString);
+          infoWindow.open(myMap, marker);
+      });
+    });
   }
 
 
@@ -243,8 +243,6 @@ function initMap(lat, lng, zoom) {
 
         <input type="submit" value="Submit">
       </form>
-
-
       `
     );
 
@@ -289,8 +287,28 @@ async function deleteMarker(locationid) {
   }
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+  const linkBtn = document.getElementById("link-btn");
+  const infoBox = document.getElementById("info-box");
+  const closeBtn = document.getElementsByClassName("close-btn")[0];
+  const shareLinkInput = document.getElementById("share-link");
+  const userId = document.getElementById("user-id").textContent;
 
+  linkBtn.addEventListener("click", function () {
+    shareLinkInput.value = `http://127.0.0.1:5000/view-map?user_id=${userId}`;
+    infoBox.style.display = "block";
+  });
 
+  closeBtn.addEventListener("click", function () {
+    infoBox.style.display = "none";
+  });
+
+  window.addEventListener("click", function (event) {
+    if (event.target === infoBox) {
+      infoBox.style.display = "none";
+    }
+  });
+});
 
 // Google Maps APIの読み込みを開始する
 loadGoogleMapsAPI();
