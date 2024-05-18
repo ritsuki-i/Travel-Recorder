@@ -13,6 +13,7 @@
 <body>
 
   <div id="header">
+
     <div id="lefthalf">
       <div id="sub_title">
       TravelRecorder
@@ -49,12 +50,15 @@
 
       </div>
 
+      <div id="button-container">
+        <button class="sort-button" data-column="label" data-order="asc">Name</button>
+        <button class="sort-button" data-column="date" data-order="asc">Date↑↓</button>
+      </div>
 
       <!-- marker listを表示 april 6 Ian-->
       {% if session["marker_list"] %}
       <table id="detail-table-pc">
-       
-       
+  
         {% for marker in session["marker_list"] %}
         <tr class="vertical-row" id="marker-row-{{ marker['locationid'] }}" onclick="centerMapOnMarker({{ marker['lat'] }}, {{ marker['lng'] }})">
           <th scope="row">{{ marker["label"] }}</th>
