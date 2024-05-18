@@ -66,7 +66,7 @@ def toMyMap():
         return jsonify({'message': 'Success'})
     
 
-# static/js/map.js, templates/mymap.html, src/lat_lng_finder.py, app.pyのmap_page()を追加
+# static/js/map.js, templates/my-map.html, src/lat_lng_finder.py, app.pyのmap_page()を追加
 # 今の時点でデータベースに入れるのは[ 緯度, 経度, ユーザが入力した名前, ユーザが入力したデスクリプション ]
 # データベースはまだ設定されていないから、今まだ一個のマーカーしか見せないようにしている。
 @app.route('/my-map', methods=['GET', 'POST'])
@@ -122,12 +122,12 @@ def map_page():
     marker_list = session.get("marker_list", [])
 
     # マップページをレンダリング
-    return render_template("mymap.html", lat=default_lat, lng=default_lng, marker_list=marker_list)
+    return render_template("my-map.html", lat=default_lat, lng=default_lng, marker_list=marker_list)
 
 @app.route('/CreateAccount', methods=['GET','POST'])
 def CreateAccount():
     return render_template(
-        'createAccount.html'
+        'create-account.html'
     )
 
 @app.template_filter('get_date_time')
@@ -142,7 +142,7 @@ def get_date_time(ts):
 @app.route('/ChangePassword', methods=['GET','POST'])
 def ChangePassword():
     return render_template(
-        'ChangePassword.html'
+        'change-password.html'
     )
 
 @app.route('/logout', methods=['POST'])
