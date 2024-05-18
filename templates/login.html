@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="../static/css/login.css">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="../static/js/Authentication.js" defer type="module"></script>
+        <script src="../static/js/authenthication.js" defer type="module"></script>
         
     </head>
     
@@ -46,7 +46,7 @@
       
 
         <div id="title">
-             <h1 id="titletext">Travel Recorder</h1>  
+             <h1 id="title-text">Travel Recorder</h1>
         </div>
         
        
@@ -55,15 +55,15 @@
             
             <div class="top-section">
 
-                <div class="EmailPassLogin">
+                <div class="email-pass-login">
                     
-                        <div class="EmailLogin">
+                        <div class="email-login">
                             Mail-Address:
-                            <input type="email" id="LoginEmail">
+                            <input type="email" id="login-email">
                         </div>
-                        <div class="PassLogin">
+                        <div class="pass-login">
                             Password:
-                            <input type="password" id="LoginPass">
+                            <input type="password" id="login-pass">
                         </div>
                 
                 </div>
@@ -72,8 +72,7 @@
 
             <div class="bottom-section">
                 <div class="left-half">
-                    <div id="gBordering">
-                        
+                    <div id="g-bordering">
                         <button id="login-google">Login with Google</button>
                     </div>
                 </div>
@@ -86,12 +85,12 @@
 
         </div>
 
-       <div class="AccountBordering">
-            <form action="/CreateAccount" method="post">
-                <button id="Account" type="submit">アカウント作成</button>
+       <div class="account-bordering">
+            <form action="/create-account" method="post">
+                <button id="account" type="submit">アカウント作成</button>
             </form>
-            <form action="/ChangePassword" name="ChangePassword" method="post">
-                <a href="javascript:ChangePassword.submit()">パスワードがわからない</a>
+            <form action="/change-password" name="change-password" method="post">
+                <a href="javascript:change-password.submit()">パスワードがわからない</a>
             </form>
 
        </div>

@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/css/createAccount.css">
-    <script type="text/javascript">
-        window.firebaseConfig = {{ loginapi_json_value | tojson }};
-    </script>
-    <script src="../static/js/Authentication.js" defer type="module"></script>
+    <link rel="stylesheet" href="../static/css/create-account.css">
+    <script src="../static/js/authenthication.js" defer type="module"></script>
     <title>TravelRecorder-CreateAccount</title>
 </head>
 <body>    
@@ -49,20 +46,20 @@
 
             <div class="email">
                 New Mail Address:
-                <input type="email" id="inputEmail">
+                <input type="email" id="input-email">
             </div>
 
             <div class="password">
                 New Password:
-                <input type="password" id="inputPass">
+                <input type="password" id="input-pass">
             </div>
             
         </div>   
 
         <div class="bottom-section">
             <div class="left-half">
-                <div id="gBordering">
-                    <button id="CreateAccount">アカウント登録</button>
+                <div id="g-bordering">
+                    <button id="create-account">アカウント登録</button>
                 </div>
             </div>
     
