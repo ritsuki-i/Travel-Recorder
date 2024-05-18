@@ -1,4 +1,7 @@
+import os
+
 import firebase_admin
+from dotenv import load_dotenv
 from firebase_admin import credentials
 from firebase_admin import firestore,storage
 import json
@@ -9,18 +12,14 @@ from .User import User
 # ===================== Firebase =====================================
 # このPythonファイルと同じ階層に認証ファイル(秘密鍵)を配置して、ファイル名を格納
 #githubから見えないようにするためのもの
-try:
-    with open("/etc/secrets/travelrecorder-1c617-firebase-adminsdk-fyjsn-0fc3b50694.json", 'r') as file:
-        JSON_PATH = "/etc/secrets/travelrecorder-1c617-firebase-adminsdk-fyjsn-0fc3b50694.json" #ここかえて！！
-except FileNotFoundError:
-    #discordからダウンロードしてね♡
-    JSON_PATH = "static/js/travelrecorder-1c617-firebase-adminsdk-fyjsn-0fc3b50694.json"
 
 
+load_dotenv()
+firebase_api_key = json.loads(os.getenv("FIREBASE_API_KEY"))
 
 
 # Firebase初期化
-cred = credentials.Certificate(JSON_PATH)
+cred = credentials.Certificate(firebase_api_key)
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 # ====================================================================
