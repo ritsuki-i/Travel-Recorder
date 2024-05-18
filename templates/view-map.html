@@ -17,12 +17,12 @@
       <div id="sub-title">
       TravelRecorder
       </div>
-    
+
     </div>
 
 
       <div id="right-half">
-        
+
       <button type="button" id="link-btn">マップを共有する</button>
       <p id="user_email">{{ session["user_email"] }}</p>
       <p id="user-id" style="display: none">{{ session["user_id"] }}</p>
@@ -40,7 +40,7 @@
     <div id="searchstyling">
       <div id="searchform">
       <!-- 場所検索用のフォーム -->
-      <form action="/my-map" method="POST">
+      <form action="/view-map" method="POST">
         <input type="hidden" name="form_type" value="search_location">
         <label for="location">場所を検索：</label>
         <input type="text" name="location" id="location" placeholder="場所名">
@@ -51,11 +51,10 @@
 
 
       <!-- marker listを表示 -->
-      {% if session["marker_list"] %}
+      {% if marker_list %}
       <table id="detail-table-pc">
-       
-       
-        {% for marker in session["marker_list"] %}
+
+        {% for marker in marker_list %}
         <tr class="vertical-row" id="marker-row-{{ marker['locationid'] }}" onclick="centerMapOnMarker({{ marker['lat'] }}, {{ marker['lng'] }})">
           <th scope="row">{{ marker["label"] }}</th>
           <td>{{ marker["description"] }}</td>
@@ -74,24 +73,17 @@
 
   </div>
 
-  <div id="info-box" class="info-box">
-    <div class="info-box-content">
-      <span class="close-btn">&times;</span>
-      <p>Share this link:</p>
-      <input type="text" id="share-link" readonly>
-    </div>
-  </div>
-
   <script>
       let mapParams = {
         lat: {{ session["lat"] }},
         lng: {{ session["lng"] }},
         zoom: 15,
-        mapMarkers: {{ session["marker_list"] | tojson | safe }}
+        mapMarkers: {{ marker_list | tojson | safe }}
       };
+
   </script>
   <!-- Googleマップを操作するためのJavaScriptファイル -->
-  <script src="../static/js/my-map.js"></script>
+  <script src="../static/js/view-map.js"></script>
 
 
 </body>
