@@ -105,9 +105,10 @@ def delete_marker_from_firestore(Id, LocationId):
 
 #Firestorageからimageをデリート
 def delete_image_from_storage(user_id, location_id):
-    blob = bucket.blob(f"{user_id}/{location_id}")
-    blob.delete()
-    print('File deleted successfully')
+    blobs = bucket.list_blobs(prefix=f"{user_id}/{location_id}/")
+    for blob in blobs:
+        blob.delete()
+        print(f'File {blob.name} deleted successfully')
     
 
 # Function to save marker and image to Firestore
