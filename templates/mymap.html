@@ -59,24 +59,6 @@
         {% endfor %}
       </table>
 
-      <table id="detail-table-phone">
-        <thead>
-          <tr>
-            <th scope="col" class="name">Name</th>
-            <th scope="col" class="description">Description</th>
-          </tr>
-        </thead>
-        {% for marker in session["marker_list"] %}
-        <tr>
-          <th scope="col" class="name">{{ marker["label"] }}</th>
-          <th scope="col" class="description">{{ marker["description"] }}</th>
-        </tr>
-        {% endfor %}
-      </table>
-      {% endif %}
-      <p id="phone-margin"></p>
-
-
     </div>
 
     <div id="mapstyling">
