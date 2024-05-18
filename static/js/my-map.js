@@ -1,7 +1,7 @@
 // Google Maps APIを読み込むための関数
 async function loadGoogleMapsAPI() {
   try {
-    const response = await fetch('/google_map_key');
+    const response = await fetch('/google-map-key');
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -13,7 +13,7 @@ async function loadGoogleMapsAPI() {
     script.src = `https://maps.googleapis.com/maps/api/js?key=${googleMapKey}&v=weekly`;
     document.head.appendChild(script);
 
-    // Initialize the map after the script is loaded
+    // Initialize the myMap after the script is loaded
     script.onload = () => {
       initMap(mapParams.lat, mapParams.lng, mapParams.zoom);
     };
@@ -22,7 +22,7 @@ async function loadGoogleMapsAPI() {
   }
 }
 
-let map;
+let myMap;
 
 //プレビューするための関数
 /**
@@ -169,7 +169,7 @@ function initMap(lat, lng, zoom) {
 
   // Googleマップのインスタンスを作成。指定された緯度、経度、ズームレベルで中心を設定
   const center = new google.maps.LatLng(mapParams.lat, mapParams.lng);
-  map = new google.maps.Map(document.getElementById("map"), {
+  myMap = new google.maps.Map(document.getElementById("map"), {
     zoom: zoom,
     center: center,
     styles: mapStyles//地図のスタイリングapril4th
@@ -185,7 +185,7 @@ function initMap(lat, lng, zoom) {
 
         let marker = new google.maps.Marker({
           position: {lat: parseFloat(mapMarker.lat), lng: parseFloat(mapMarker.lng)},
-          map: map,
+          map: myMap,
           icon: pinIcon,
           label: mapMarker.label ? mapMarker.label : 'No Label'
         });
@@ -199,7 +199,7 @@ function initMap(lat, lng, zoom) {
             </div>`;
 
             infoWindow.setContent(contentString);
-            infoWindow.open(map, marker);
+            infoWindow.open(myMap, marker);
         });
       });
   }
@@ -209,7 +209,7 @@ function initMap(lat, lng, zoom) {
   let infoWindow = new google.maps.InfoWindow();
 
   // マップがクリックされた場合の処理。インフォウィンドウを新しい位置に表示し、フォームを含める
-  map.addListener("click", (mapsMouseEvent) => {
+  myMap.addListener("click", (mapsMouseEvent) => {
 
     // 既存のインフォウィンドウがあれば閉じる
     if (infoWindow) infoWindow.close();
@@ -249,14 +249,14 @@ function initMap(lat, lng, zoom) {
     );
 
     // インフォウィンドウを開く
-    infoWindow.open(map);
+    infoWindow.open(myMap);
   });
 }
 
 function centerMapOnMarker(lat, lng) {
   const center = new google.maps.LatLng(lat, lng);
-  map.setCenter(center);
-  map.setZoom(15);  // You can adjust the zoom level as needed
+  myMap.setCenter(center);
+  myMap.setZoom(15);  // You can adjust the zoom level as needed
 }
 
 async function deleteMarker(locationid) {
@@ -278,7 +278,7 @@ async function deleteMarker(locationid) {
         rowElement.remove();
       }
 
-      initMap(mapParams.lat, mapParams.lng, mapParams.zoom); // Re-initialize the map
+      initMap(mapParams.lat, mapParams.lng, mapParams.zoom); // Re-initialize the myMap
       alert('Marker deleted successfully.');
     } else {
       alert('Error communicating with the server.');

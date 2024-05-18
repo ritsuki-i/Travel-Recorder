@@ -2,27 +2,26 @@
 <html lang="en">
 
 <head>
-  <link rel="stylesheet" href="../static/css/mymap.css">
+  <link rel="stylesheet" href="../static/css/my-map.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="../static/js/Authentication.js" defer type="module"></script>
-  <script src="../static/js/tableSort.js" defer></script>
+  <script src="../static/js/authenthication.js" defer type="module"></script>
+  <script src="../static/js/table-sort.js" defer></script>
   <title>TravelRecorder</title>
 </head>
 
 <body>
 
   <div id="header">
-
-    <div id="lefthalf">
-      <div id="sub_title">
+    <div id="left-half">
+      <div id="sub-title">
       TravelRecorder
       </div>
     
     </div>
 
 
-      <div id="righthalf">
+      <div id="right-half">
         
       <button type="button" id="link-btn">マップを共有する</button>
       <p id="user_email">{{ session["user_email"] }}</p>
@@ -50,15 +49,12 @@
 
       </div>
 
-      <div id="button-container">
-        <button class="sort-button" data-column="label" data-order="asc">Name</button>
-        <button class="sort-button" data-column="date" data-order="asc">Date↑↓</button>
-      </div>
 
       <!-- marker listを表示 april 6 Ian-->
       {% if session["marker_list"] %}
       <table id="detail-table-pc">
-  
+       
+       
         {% for marker in session["marker_list"] %}
         <tr class="vertical-row" id="marker-row-{{ marker['locationid'] }}" onclick="centerMapOnMarker({{ marker['lat'] }}, {{ marker['lng'] }})">
           <th scope="row">{{ marker["label"] }}</th>
@@ -88,7 +84,7 @@
 
   </script>
   <!-- Googleマップを操作するためのJavaScriptファイル -->
-  <script src="../static/js/map.js"></script>
+  <script src="../static/js/my-map.js"></script>
 
 
 </body>

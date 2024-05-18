@@ -120,9 +120,6 @@ h1{
     padding-bottom:10px;
 }
 
-
-
-
 .email ,.password{
     border: none; /* 枠を削除 */
     border-bottom: 1px solid ivory; /* 下線を追加 */
@@ -139,7 +136,7 @@ h1{
     
 }
 
-.email #inputEmail,.password #inputPass{
+.email #input-email,.password #input-pass{
     border: none;
     background-color: transparent;
     color: ivory; 
@@ -148,11 +145,7 @@ h1{
     width: 100%;
 }
 
-
-
-
-
-#CreateAccount{
+#create-account{
     background-color: transparent; 
     border: none;
     color: ivory;
@@ -165,7 +158,7 @@ h1{
     
 }
 
-#CreateAccount:hover {
+#create-account:hover {
   transition-duration: 0.5s;
   color:rgb(178, 232, 229);
 }

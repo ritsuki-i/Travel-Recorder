@@ -13,7 +13,7 @@ import {
 /*import firebaseConfig from "./loginapi.json" assert { type: "json" };*/
 async function fetchFirebaseConfig() {
   try {
-    const response = await fetch('/login_api_json');
+    const response = await fetch('/login-api-json');
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
@@ -35,7 +35,7 @@ async function fetchFirebaseConfig() {
           const user = result.user;
           const dataToPython = { User: user, Token: token };
 
-          fetch("/toMyMap", {
+          fetch("/to-my-map", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -45,7 +45,7 @@ async function fetchFirebaseConfig() {
           .then((response) => response.json())
           .then((data) => {
             console.log("Data from Python:", data);
-            window.location.href = "/toMyMap";
+            window.location.href = "/to-my-map";
           })
           .catch((error) => {
             console.error("Error:", error);
@@ -56,8 +56,8 @@ async function fetchFirebaseConfig() {
         });
     });
 
-    const LoginEmail = document.getElementById("LoginEmail");
-    const LoginPass = document.getElementById("LoginPass");
+    const LoginEmail = document.getElementById("login-email");
+    const LoginPass = document.getElementById("login-pass");
     const emailpassLogin = document.getElementById("login-emailpass");
     emailpassLogin?.addEventListener("click", function () {
       signInWithEmailAndPassword(auth, LoginEmail.value, LoginPass.value)
@@ -68,7 +68,7 @@ async function fetchFirebaseConfig() {
           const emailVerified = user.emailVerified;
 
           if (emailVerified){
-            fetch("/toMyMap", {
+            fetch("/to-my-map", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -78,7 +78,7 @@ async function fetchFirebaseConfig() {
             .then((response) => response.json())
             .then((data) => {
               console.log("Data from Python:", data);
-              window.location.href = "/toMyMap";
+              window.location.href = "/to-my-map";
             })
             .catch((error) => {
               alert(error);
@@ -94,10 +94,10 @@ async function fetchFirebaseConfig() {
         });
     });
 
-    const inputEmail = document.getElementById("inputEmail");
-    const inputPass = document.getElementById("inputPass");
-    const CreateAccount = document.getElementById("CreateAccount");
-    CreateAccount?.addEventListener("click", function () {
+    const inputEmail = document.getElementById("input-email");
+    const inputPass = document.getElementById("input-pass");
+    const createAccount = document.getElementById("create-account");
+    createAccount?.addEventListener("click", function () {
       if (!inputEmail.value || !inputPass.value) {
         alert("空文字またはnullです");
       } else {
@@ -129,7 +129,7 @@ async function fetchFirebaseConfig() {
       }
     });
 
-    const ChangePassword = document.getElementById("ChangePassword");
+    const ChangePassword = document.getElementById("change-password");
     ChangePassword?.addEventListener("click", function () {
       if (!inputEmail.value) {
         alert("メールアドレスが入力されていません");
