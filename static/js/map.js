@@ -1,15 +1,25 @@
 // Google Maps APIを読み込むための関数
-function loadGoogleMapsAPI() {
-  // script要素を作成
-  let script = document.createElement('script');
-  // APIのURLを設定。APIキーとバージョン情報を含む
-  script.src = `https://maps.googleapis.com/maps/api/js?key=${mapParams.googleMapKey}&v=weekly`;
-  // script要素をdocumentのheadに追加
-  document.head.appendChild(script);
-  // スクリプトが読み込まれたら、マップを初期化する関数を実行
-  script.onload = () => {
-    initMap(mapParams.lat, mapParams.lng, mapParams.zoom);
-  };
+async function loadGoogleMapsAPI() {
+  try {
+    const response = await fetch('/google_map_key');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    const googleMapKey = data.google_map_key;
+
+    // Script to load Google Maps API
+    let script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${googleMapKey}&v=weekly`;
+    document.head.appendChild(script);
+
+    // Initialize the map after the script is loaded
+    script.onload = () => {
+      initMap(mapParams.lat, mapParams.lng, mapParams.zoom);
+    };
+  } catch (error) {
+    console.error('Error fetching Google Maps API key:', error);
+  }
 }
 
 let map;
@@ -58,10 +68,6 @@ function dragOverHandler(event) {
   console.log("dragOverHandler");
   event.preventDefault();
 }
-
-
-
-
 
 // Googleマップを初期化し、マーカーとインフォウィンドウを設定する関数
 function initMap(lat, lng, zoom) {
@@ -225,8 +231,6 @@ function initMap(lat, lng, zoom) {
           <label>
             <img class="preview pre-select" id="preview-image">
             <input type="file" accept='image/*' onchange="preview(this, 'preview-image');">
-            <p class="select-file" id="preview-image-file">選択されてません</p>
-
           </label>
         </div>
 

@@ -5,11 +5,8 @@
   <link rel="stylesheet" href="../static/css/mymap.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script type="text/javascript">
-    const data = {{ data | safe }};
-    window.firebaseConfig = data.loginapi_json_value;
-  </script>
   <script src="../static/js/Authentication.js" defer type="module"></script>
+  <script src="../static/js/tableSort.js" defer></script>
   <title>TravelRecorder</title>
 </head>
 
@@ -82,10 +79,8 @@
         lat: {{ lat }},
         lng: {{ lng }},
         zoom: 15,
-        googleMapKey: "{{ google_map_key }}",
         mapMarkers: {{ marker_list | tojson | safe }}
       };
-
 
   </script>
   <!-- Googleマップを操作するためのJavaScriptファイル -->

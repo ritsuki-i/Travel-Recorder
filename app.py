@@ -6,7 +6,7 @@ from src.lat_lng_finder import get_lat_lng
 import datetime
 import os
 import uuid
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 import json
 from google.api_core.datetime_helpers import DatetimeWithNanoseconds
 
@@ -17,32 +17,35 @@ Session(app)
 user = User()
 
 # .env ファイルを読み込む
-# load_dotenv()
-# GOOGLE_MAP_KEY = os.getenv('GOOGLE_MAP_KEY')
-GOOGLE_MAP_KEY = "AIzaSyBKOqBE1tCLB4_ruwU8WVyCuDRN0exE_xo"
+load_dotenv()
+google_map_key = os.getenv('GOOGLE_MAP_KEY')
+login_api_config = os.getenv('LOGIN_API_KEY')
 
-try:
-    with open("/etc/secrets/loginapi.json", 'r') as file:
-        loginapi_json_value = json.load(file)
-except FileNotFoundError:
-    # discordからダウンロードしてね♡
-    with open("./static/js/loginapi.json", 'r') as file:
-        loginapi_json_value = json.load(file)
+login_api_json = json.loads(os.getenv("LOGIN_API_KEY"))
 
 # デフォルトの緯度と経度を設定
 default_lat = 35.6764
 default_lng = 139.6500
+
+@app.route('/login_api_json', methods=['GET'])
+def get_login_api_json():
+    return jsonify(login_api_json)
+
+@app.route('/google_map_key', methods=['GET'])
+def get_google_map_key():
+    return jsonify({'google_map_key': google_map_key})
 
 
 @app.route('/', methods=['GET'])
 def login():
     user.UserEmail =  None
     user.UserID =  None
+    for key in list(session.keys()):
+        session.pop(key)
+    session.clear()
     return render_template(
-        'login.html', loginapi_json_value = loginapi_json_value
+        'login.html'
     )
-
-
 
 @app.route('/toMyMap', methods=['GET','POST'])
 def toMyMap():
@@ -54,7 +57,7 @@ def toMyMap():
             return redirect('/my-map')
         else:
             return render_template(
-                'login.html',loginapi_json_value=loginapi_json_value
+                'login.html'
             )
     else:
         userData = request.json
@@ -105,24 +108,20 @@ def map_page():
         else:
             # ログインページをレンダリング
             return render_template(
-                'login.html', loginapi_json_value=loginapi_json_value, google_map_key=GOOGLE_MAP_KEY
+                'login.html'
             )
-    data = {
-        "google_map_key": GOOGLE_MAP_KEY,
-        "loginapi_json_value": loginapi_json_value
-    }
 
     lat = session.get("lat", default_lat)
     lng = session.get("lng", default_lng)
     marker_list = session.get("marker_list", [])
 
     # マップページをレンダリング
-    return render_template("mymap.html", data=json.dumps(data), lat=lat, lng=lng, marker_list=marker_list, google_map_key=GOOGLE_MAP_KEY)
+    return render_template("mymap.html", lat=default_lat, lng=default_lng, marker_list=marker_list)
 
 @app.route('/CreateAccount', methods=['GET','POST'])
 def CreateAccount():
     return render_template(
-        'createAccount.html',loginapi_json_value=loginapi_json_value
+        'createAccount.html'
     )
 
 @app.template_filter('get_date_time')
@@ -137,7 +136,7 @@ def get_date_time(ts):
 @app.route('/ChangePassword', methods=['GET','POST'])
 def ChangePassword():
     return render_template(
-        'ChangePassword.html',loginapi_json_value=loginapi_json_value
+        'ChangePassword.html'
     )
 
 @app.route('/logout', methods=['POST'])
@@ -145,8 +144,27 @@ def logout():
     # セッションの全てのキーを削除
     for key in list(session.keys()):
         session.pop(key)
+    session.clear()
     # ログインページにリダイレクト
     return redirect(url_for('login'))
+
+@app.route('/delete-marker', methods=['POST'])
+def delete_marker():
+    data = request.json
+    locationid = data.get('locationid')
+
+    if locationid:
+        try:
+            # Firestoreからマーカーを削除
+            firebase_db.delete_marker_from_firestore(user.UserID, locationid)
+            # セッションからマーカーを削除
+            session["lat"], session["lng"] = default_lat, default_lng
+            session['marker_list'] = [m for m in session['marker_list'] if m['locationid'] != locationid]
+            return jsonify({'success': True})
+        except Exception as e:
+            return jsonify({'success': False, 'error': str(e)})
+    else:
+        return jsonify({'success': False, 'error': 'Location ID is required'})
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
