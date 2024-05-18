@@ -1,10 +1,13 @@
 @charset "UTF-8";
-
+html{
+   background: linear-gradient(to right, #004f80,#008080 );
+}
 body {
    margin: 0;
    height:1200px;
    /*background: linear-gradient(to bottom, #004f80,#008080 );*/
-   background-color: teal;
+   background: linear-gradient(to right, #004f80,#008080 );
+   /*background-color: teal;*/
    overflow-x: hidden;
    font-family: 'Courier New', Courier, monospace;
 }
@@ -84,7 +87,7 @@ p{
    color: ivory;
    font-weight: bold;
    flex: 1;
-   background-color:teal;
+   background-color:transparent;
 
 }
 
@@ -102,6 +105,11 @@ p{
    
 }
 
+
+#button-container{
+   margin-left: 10px;
+   margin-bottom:10px;
+}
 
 #map {
    height: 100%;
