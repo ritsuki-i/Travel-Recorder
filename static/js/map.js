@@ -30,7 +30,6 @@ let map;
  * @param {String} previewId プレビュー表示DOMのID
  */
 function preview(obj, previewId) {
-  console.log("preview");
   previewFiles(obj.files, previewId);
 }
 
@@ -39,7 +38,6 @@ function preview(obj, previewId) {
 * @param {String} previewId プレビュー表示DOMのID
 */
 function previewFiles(files, previewId) {
-  console.log("previewFiles");
   const previewContainer = document.getElementById(previewId);
   previewContainer.innerHTML = ''; // プレビューコンテナをクリア
 
@@ -61,8 +59,6 @@ function previewFiles(files, previewId) {
  * @param {Event} event
  */
 function dropHandler(event) {
-  console.log("dropHandler");
-
   event.preventDefault();
 
   if (event.dataTransfer.files.length === 0) return false;
