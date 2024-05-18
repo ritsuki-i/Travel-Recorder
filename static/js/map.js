@@ -24,49 +24,55 @@ async function loadGoogleMapsAPI() {
 
 let map;
 
+//プレビューするための関数
 /**
  * @param {HTMLInputElement} obj 入力情報
  * @param {String} previewId プレビュー表示DOMのID
  */
 function preview(obj, previewId) {
-  console.log("preview");
-  previewFile(obj.files, previewId);
+  previewFiles(obj.files, previewId);
 }
 
 /**
 * @param {File} files 入力ファイル
 * @param {String} previewId プレビュー表示DOMのID
 */
-function previewFile(files, previewId) {
-  console.log("previewFile");
-  let fileReader = new FileReader();
-  fileReader.onload = (function () {
-      document.getElementById(previewId).src = fileReader.result;
-      document.getElementById(`${previewId}-file`).innerText = files[0].name;
+function previewFiles(files, previewId) {
+  const previewContainer = document.getElementById(previewId);
+  previewContainer.innerHTML = ''; // プレビューコンテナをクリア
+
+  Array.from(files).forEach((file, index) => {
+    const fileReader = new FileReader();
+    fileReader.onload = function () {
+      const img = document.createElement('img');
+      img.src = fileReader.result;
+      img.classList.add('preview-image');  // 画像にCSSクラスを追加
+      previewContainer.appendChild(img);
+    };
+    fileReader.readAsDataURL(file);
   });
-  fileReader.readAsDataURL(files[0]);
+
+  document.getElementById(`${previewId}-file`).innerText = files.length > 1 ? `${files.length} files selected` : files[0].name;
 }
 
-/**
-* @param {Event} event
-*/
+/** 
+ * @param {Event} event
+ */
 function dropHandler(event) {
-  console.log("dropHandler");
-
   event.preventDefault();
 
   if (event.dataTransfer.files.length === 0) return false;
   const files = event.dataTransfer.files;
   const previewId = `preview-${event.currentTarget.id}`;
-  previewFile(files, previewId);
+  previewFiles(files, previewId);
 }
 
 /**
-* @param {Event} event
-*/
+ * @param {Event} event
+ */
 function dragOverHandler(event) {
-  console.log("dragOverHandler");
   event.preventDefault();
+  event.dataTransfer.dropEffect = "copy";  // ドラッグオーバー時のカーソルを変更
 }
 
 // Googleマップを初期化し、マーカーとインフォウィンドウを設定する関数
@@ -217,7 +223,7 @@ function initMap(lat, lng, zoom) {
     // インフォウィンドウに表示する内容を設定。場所の名前と説明を入力するフォーム
     infoWindow.setContent(
       `
-      <form action="/my-map" method="post">
+      <form action="/my-map" method="post" enctype="multipart/form-data">
         <input type="hidden" name="form_type" value="submit_location">
         <input type="hidden" id="lat" name="lat" value="${latLng.lat}">
         <input type="hidden" id="lng" name="lng" value="${latLng.lng}">
@@ -226,11 +232,12 @@ function initMap(lat, lng, zoom) {
         <label for="description">Description:</label>
         <input type="text" id="description" name="description"><br>
 
-        <label for="image">image:</label>
+        <label for="images">image:</label>
         <div class="filearea" id="image" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
           <label>
-            <img class="preview pre-select" id="preview-image">
-            <input type="file" accept='image/*' onchange="preview(this, 'preview-image');">
+            <input type="file" id="image_input" name="image_input" accept='image/*' multiple onchange="preview(this, 'preview-container');">ファイルをすべて選択
+            <div id="preview-container"></div>
+            <p class="select-file" id="preview-image-file"></p>
           </label>
         </div>
 

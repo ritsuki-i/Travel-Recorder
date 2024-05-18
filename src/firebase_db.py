@@ -7,7 +7,7 @@ from firebase_admin import firestore,storage
 import json
 import datetime
 
-from .User import User
+from src.User import User
 
 # ===================== Firebase =====================================
 # このPythonファイルと同じ階層に認証ファイル(秘密鍵)を配置して、ファイル名を格納
@@ -16,12 +16,17 @@ from .User import User
 
 load_dotenv()
 firebase_api_key = json.loads(os.getenv("FIREBASE_API_KEY"))
+firebase_storageBucket=json.loads(os.getenv("FIREBASE_STORAGEBUCKET"))
 
 
 # Firebase初期化
 cred = credentials.Certificate(firebase_api_key)
-firebase_admin.initialize_app(cred)
+
+# Firebaseアプリの初期化
+firebase_admin.initialize_app(cred, firebase_storageBucket)
+
 db = firestore.client()
+bucket = storage.bucket()
 # ====================================================================
 
 
@@ -38,19 +43,45 @@ def setUser(User):
     })
     
 #Cloud Firestoreのサブコレクションにマーカー情報を格納
-def save_marker_to_firestore(marker_info,userID,locationid):
-    db = firestore.client()
-    markers_ref = db.collection(collectionName).document(str(userID)).collection(colectionLocate).document(str(locationid))  
-
-    # マーカー情報をFirestoreに保存
+def save_marker_to_firestore(marker_info, userId, locationid):
+    markers_ref = db.collection(collectionName).document(str(userId)).collection(colectionLocate).document(str(locationid))
     markers_ref.set({
         'label': marker_info['label'],
         'lat': marker_info['lat'],
         'lng': marker_info['lng'],
         'description': marker_info['description'],
-        'date':marker_info['date'],
-        'locationid':str(marker_info['locationid'])
+        'date': marker_info['date'],
+        'locationid': str(marker_info['locationid'])
     })
+    
+# Function to upload image to Firebase Storage and return the URL
+def upload_image_to_storage(user_id, location_id, image_file):
+    blob = bucket.blob(f"{user_id}/{location_id}/{image_file.filename}")
+    blob.upload_from_file(image_file)
+    blob.make_public()
+    print('File uploaded successfully')
+    return blob.public_url
+
+# Function to save marker and image to Firestore
+def save_marker_to_firestore_with_image(marker_info, user_id, location_id, image_files):
+    i=0
+    for image_file in image_files:
+        print(type(image_file))
+        image_url = upload_image_to_storage(user_id, location_id, image_file)
+        marker_info['image_url'+str(i)] = image_url
+        # marker_infoのUUIDオブジェクトを文字列に変換
+        marker_info['locationid'] = str(marker_info['locationid'])
+        markers_ref = db.collection(collectionName).document(str(user_id)).collection(colectionLocate).document(str(location_id))
+        markers_ref.set(marker_info)
+        i=i+1
+#Firestorageにimageをアップロードしてurlを返す
+def upload_image_to_storage(userId, locationid,image_file):
+    blob = bucket.blob(f"{userId}/{locationid}/{image_file.filename}")
+    blob.upload_from_file(image_file)
+    blob.make_public()
+    return blob.public_url
+
+
     
 #Cloud Firestoreのサブコレクションにある全てのドキュメントの情報をすべて取得
 def get_allmarker_from_firestore(Id):
@@ -82,7 +113,7 @@ def delete_marker_from_firestore(Id, LocationId):
 
 #ex
 User=User()
-User.UserID="15822096" #<-自動で割当？ 
+User.UserID="15822096" #<-自動で割当(uuid)
 
 User.UserEmail="15822097@aoyama.jp"
 

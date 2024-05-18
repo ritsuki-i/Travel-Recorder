@@ -141,3 +141,28 @@ table:hover {
  }
  
  
+
+/* プレビュー画像のスタイルを定義 */
+.preview-image {
+   width: 100px;  /* 任意の幅 */
+   height: auto;  /* 自動で高さを調整 */
+   margin: 5px;   /* 画像間の余白 */
+   display: inline-block;  /* 横に並べる */
+ }
+ 
+#image{
+   padding:10px 10px;
+   color: #783535;
+   border:black 1px solid;
+   cursor: pointer;
+}
+
+ input[type="file"] {
+   display: none;
+}
+
+ #preview-container {
+   display: flex;
+   flex-wrap: wrap;
+ }
+ 
