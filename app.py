@@ -153,11 +153,14 @@ def logout():
 def delete_marker():
     data = request.json
     locationid = data.get('locationid')
+    
 
     if locationid:
         try:
             # Firestoreからマーカーを削除
             firebase_db.delete_marker_from_firestore(user.UserID, locationid)
+            #cloud storageから画像を削除
+            firebase_db.delete_image_from_storage(user.UserID, locationid)
             # セッションからマーカーを削除
             session["lat"], session["lng"] = default_lat, default_lng
             session['marker_list'] = [m for m in session['marker_list'] if m['locationid'] != locationid]
