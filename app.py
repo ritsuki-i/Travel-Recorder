@@ -11,13 +11,15 @@ import json
 from google.api_core.datetime_helpers import DatetimeWithNanoseconds
 
 app = Flask(__name__)
+app.config["SESSION_PERMANENT"] = False
 app.config['SESSION_TYPE'] = 'filesystem'
 Session(app)
 user = User()
 
 # .env ファイルを読み込む
-#load_dotenv()
-GOOGLE_MAP_KEY = os.getenv('GOOGLE_MAP_KEY')
+# load_dotenv()
+# GOOGLE_MAP_KEY = os.getenv('GOOGLE_MAP_KEY')
+GOOGLE_MAP_KEY = "AIzaSyBKOqBE1tCLB4_ruwU8WVyCuDRN0exE_xo"
 
 try:
     with open("/etc/secrets/loginapi.json", 'r') as file:
@@ -103,7 +105,7 @@ def map_page():
         else:
             # ログインページをレンダリング
             return render_template(
-                'login.html',loginapi_json_value = loginapi_json_value
+                'login.html', loginapi_json_value=loginapi_json_value, google_map_key=GOOGLE_MAP_KEY
             )
     data = {
         "google_map_key": GOOGLE_MAP_KEY,
@@ -115,7 +117,7 @@ def map_page():
     marker_list = session.get("marker_list", [])
 
     # マップページをレンダリング
-    return render_template("mymap.html", data=json.dumps(data), lat=lat, lng=lng, marker_list=marker_list) 
+    return render_template("mymap.html", data=json.dumps(data), lat=lat, lng=lng, marker_list=marker_list, google_map_key=GOOGLE_MAP_KEY)
 
 @app.route('/CreateAccount', methods=['GET','POST'])
 def CreateAccount():
