@@ -166,7 +166,6 @@ table:hover {
    flex-wrap: wrap;
  }
 
- /* The Modal (background) */
 .info-box {
   display: none;
   position: fixed;
@@ -181,7 +180,6 @@ table:hover {
   padding-top: 60px;
 }
 
-/* Modal Content/Box */
 .info-box-content {
   background-color: #fefefe;
   margin: 5% auto;
@@ -191,7 +189,6 @@ table:hover {
   max-width: 600px;
 }
 
-/* The Close Button */
 .close-btn {
   color: #aaa;
   float: right;
@@ -204,6 +201,11 @@ table:hover {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+#share-link {
+    padding: 8px 4px;
+    width: 95%;
 }
 
  
