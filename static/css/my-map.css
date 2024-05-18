@@ -1,18 +1,20 @@
 @charset "UTF-8";
-html{
-   background: linear-gradient(to right, #004f80,#008080 );
+
+html {
+   background: linear-gradient(to right, #004f80, #008080);
 }
+
 body {
    margin: 0;
-   height:1200px;
+   height: 1200px;
    /*background: linear-gradient(to bottom, #004f80,#008080 );*/
-   background: linear-gradient(to right, #004f80,#008080 );
+   background: linear-gradient(to right, #004f80, #008080);
    /*background-color: teal;*/
    overflow-x: hidden;
    font-family: 'Courier New', Courier, monospace;
 }
 
-p{
+p {
    font-family: 'Courier New', Courier, monospace;
 }
 
@@ -25,9 +27,9 @@ p{
    height: 50px;
 }
 
-#sub-title{
+#sub-title {
    margin-top: 15px;
-   margin-left:10px;
+   margin-left: 10px;
    font-size: 21px;
 }
 
@@ -52,7 +54,7 @@ p{
 
 }
 
-#link-btn{
+#link-btn {
    margin-right: 10px;
 }
 
@@ -66,7 +68,7 @@ p{
    outline: none;
    margin-top: 15px;
    margin-right: 7px;
-   margin-left:4px;
+   margin-left: 4px;
 }
 
 
@@ -87,14 +89,14 @@ p{
    color: ivory;
    font-weight: bold;
    flex: 1;
-   background-color:transparent;
+   background-color: transparent;
 
 }
 
-#searchform{
+#searchform {
    margin-left: 10px;
    margin-top: 10px;
-   margin-bottom:10px;
+   margin-bottom: 10px;
 }
 
 #mapstyling {
@@ -102,13 +104,13 @@ p{
    flex: 4;
    justify-content: center;
    align-items: center;
-   
+
 }
 
 
-#button-container{
+#button-container {
    margin-left: 10px;
-   margin-bottom:10px;
+   margin-bottom: 10px;
 }
 
 #map {
@@ -124,112 +126,124 @@ p{
    margin-right: 5px;
    background-color: white;
    color: black;
- }
- 
- .vertical-row th,
- .vertical-row td {
+}
+
+.vertical-row th,
+.vertical-row td {
    border: 1px solid black;
    padding: 8px;
- }
-
- /* Ensure images do not exceed cell width */
- #detail-table-pc .image-container img {
-   width: 100%; 
 }
 
-#detail-table-pc{
-   width: 40vw;
+/* Ensure images do not exceed cell width */
+#detail-table-pc .image-container img {
+   max-width: 100%;
 }
 
- tbody{
-   display:flex;
+#detail-table-pc .image-container {
+   text-align: center;
+}
+
+#detail-table-pc {
+   width: 30vw;
+}
+
+tbody {
+   display: flex;
    flex-direction: column;
- }
+}
 
- 
+
 table:hover {
    cursor: pointer;
- }
- 
+}
 
- th:hover, td:hover {
+
+th:hover,
+td:hover {
    cursor: pointer;
- }
- 
- 
+}
+
+
 
 /* プレビュー画像のスタイルを定義 */
 .preview-image {
-   width: 100px;  /* 任意の幅 */
-   height: auto;  /* 自動で高さを調整 */
-   margin: 5px;   /* 画像間の余白 */
-   display: inline-block;  /* 横に並べる */
- }
- 
-#image{
-   padding:10px 10px;
+   width: 100px;
+   /* 任意の幅 */
+   height: auto;
+   /* 自動で高さを調整 */
+   margin: 5px;
+   /* 画像間の余白 */
+   display: inline-block;
+   /* 横に並べる */
+}
+
+#image {
+   padding: 10px 10px;
    color: #783535;
-   border:black 1px solid;
+   border: black 1px solid;
    cursor: pointer;
 }
 
- input[type="file"] {
+input[type="file"] {
    display: none;
 }
 
- #preview-container {
+#preview-container {
    display: flex;
    flex-wrap: wrap;
- } 
- .marker-image {
-   width: 10px; /* 画像の幅を指定 */
-   height: auto; /* 高さは自動調整 */
-   
+}
+
+.marker-image {
+   width: 10px;
+   /* 画像の幅を指定 */
+   height: auto;
+   /* 高さは自動調整 */
+
 }
 
 .info-box {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
-  padding-top: 60px;
+   display: none;
+   position: fixed;
+   z-index: 1;
+   left: 0;
+   top: 0;
+   width: 100%;
+   height: 100%;
+   overflow: auto;
+   background-color: rgb(0, 0, 0);
+   background-color: rgba(0, 0, 0, 0.4);
+   padding-top: 60px;
 }
 
 .info-box-content {
-  background-color: #fefefe;
-  margin: 5% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  max-width: 600px;
+   background-color: #fefefe;
+   margin: 5% auto;
+   padding: 20px;
+   border: 1px solid #888;
+   width: 80%;
+   max-width: 600px;
 }
 
 .close-btn {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
+   color: #aaa;
+   float: right;
+   font-size: 28px;
+   font-weight: bold;
 }
 
 .close-btn:hover,
 .close-btn:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+   color: black;
+   text-decoration: none;
+   cursor: pointer;
 }
 
 #share-link {
-    padding: 8px 4px;
-    width: 95%;
+   padding: 8px 4px;
+   width: 95%;
 }
 
-#right-half-phone{
+#right-half-phone {
    display: none;
 }
 
@@ -257,48 +271,48 @@ table:hover {
       width: 90vw;
    }
 
-   #detail-table-pc{
+   #detail-table-pc {
       width: 100vw;
    }
 
-   #header{
+   #header {
       flex-wrap: wrap;
       height: fit-content;
    }
 
-   #sub-title{
+   #sub-title {
       font-size: 30px;
    }
 
-   #right-half-phone{
+   #right-half-phone {
       display: block;
       margin-left: 20px;
    }
 
-   #email-and-logout{
+   #email-and-logout {
       display: flex;
    }
 
-   #logout-btn{
+   #logout-btn {
       margin-left: 20px;
    }
 
-   #right-half{
+   #right-half {
       display: none;
    }
 
 
-   #link-btn{
+   #link-btn {
       width: fit-content;
       margin-bottom: 20px;
    }
 
    #detail-table-pc {
-      width: 100%; 
-      table-layout: fixed; 
+      width: 100%;
+      table-layout: fixed;
    }
 
-   #phone-margin{
+   #phone-margin {
       height: 53vh;
    }
 

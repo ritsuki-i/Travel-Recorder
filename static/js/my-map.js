@@ -288,6 +288,7 @@ async function deleteMarker(locationid) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  /*イアン*/
   /*
   const linkBtn = document.getElementById("link-btn");
   const infoBox = document.getElementById("info-box");
@@ -309,6 +310,7 @@ document.addEventListener("DOMContentLoaded", function () {
       infoBox.style.display = "none";
     }
   });*/
+
   /*りつき作*/ 
   const linkBtn = document.getElementById("link-btn");
   const userId = document.getElementById("user-id").textContent;
