@@ -64,16 +64,18 @@ def upload_image_to_storage(user_id, location_id, image_file):
 
 # Function to save marker and image to Firestore
 def save_marker_to_firestore_with_image(marker_info, user_id, location_id, image_files):
-    i=0
+    image_urls = []
     for image_file in image_files:
         print(type(image_file))
         image_url = upload_image_to_storage(user_id, location_id, image_file)
-        marker_info['image_url'+str(i)] = image_url
-        # marker_infoのUUIDオブジェクトを文字列に変換
-        marker_info['locationid'] = str(marker_info['locationid'])
-        markers_ref = db.collection(collectionName).document(str(user_id)).collection(colectionLocate).document(str(location_id))
-        markers_ref.set(marker_info)
-        i=i+1
+        image_urls.append(image_url)
+        
+    # marker_infoのUUIDオブジェクトを文字列に変換
+    marker_info['locationid'] = str(marker_info['locationid'])
+    marker_info['image_urls'] = image_urls
+    markers_ref = db.collection(collectionName).document(str(user_id)).collection(colectionLocate).document(str(location_id))
+    markers_ref.set(marker_info)
+
   
 #Cloud Firestoreのサブコレクションにある全てのドキュメントの情報をすべて取得
 def get_allmarker_from_firestore(Id):
@@ -111,19 +113,7 @@ def delete_image_from_storage(user_id, location_id):
         print(f'File {blob.name} deleted successfully')
     
 
-# Function to save marker and image to Firestore
-def save_marker_to_firestore_with_image(marker_info, user_id, location_id, image_files):
-    i=0
-    for image_file in image_files:
-        print(type(image_file))
-        image_url = upload_image_to_storage(user_id, location_id, image_file)
-        marker_info['image_url'+str(i)] = image_url
-        # marker_infoのUUIDオブジェクトを文字列に変換
-        marker_info['locationid'] = str(marker_info['locationid'])
-        markers_ref = db.collection(collectionName).document(str(user_id)).collection(colectionLocate).document(str(location_id))
-        markers_ref.set(marker_info)
-        i=i+1
-  
+
 #ex
 User=User()
 User.UserID="15822096" #<-自動で割当(uuid)

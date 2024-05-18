@@ -172,7 +172,12 @@ table:hover {
  #preview-container {
    display: flex;
    flex-wrap: wrap;
- }
+ } 
+ .marker-image {
+   width: 10px; /* 画像の幅を指定 */
+   height: auto; /* 高さは自動調整 */
+   
+}
 
 .info-box {
   display: none;
@@ -216,4 +221,3 @@ table:hover {
     width: 95%;
 }
 
- 

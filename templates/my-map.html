@@ -60,11 +60,22 @@
        
        
         {% for marker in session["marker_list"] %}
-        <tr class="vertical-row" id="marker-row-{{ marker['locationid'] }}" onclick="centerMapOnMarker({{ marker['lat'] }}, {{ marker['lng'] }})">
-          <th scope="row">{{ marker["label"] }}</th>
-          <td>{{ marker["description"] }}</td>
-          <td>{{ marker["date"] | get_date_time }}</td>
-        </tr>
+            <tr class="vertical-row" id="marker-row-{{ marker['locationid'] }}" onclick="centerMapOnMarker({{ marker['lat'] }}, {{ marker['lng'] }})">
+                <th scope="row">{{ marker["label"] }}</th>
+                <td>{{ marker["description"] }}</td>
+                <td>{{ marker["date"] | get_date_time }}</td>
+                {% if marker["image_urls"] %}
+                <td>
+                    <div class="image-container" id="image">
+                        {% for image_url in marker["image_urls"] %}
+                        <img id="marker-image" src="{{ image_url }}" alt="Marker Image">
+                        {% endfor %}
+                    </div>
+                </td>
+                {% else %}
+                <td>No Image</td>
+                {% endif %}
+            </tr>
         {% endfor %}
       </table>
     {% endif %}
