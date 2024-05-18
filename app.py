@@ -1,4 +1,3 @@
-from flask import Flask
 from flask import Flask, redirect, render_template, request, session, url_for, jsonify
 from flask_session import Session
 from src import firebase_db
@@ -6,7 +5,10 @@ from src.User import User
 from src.lat_lng_finder import get_lat_lng
 import datetime
 import os
-from dotenv import load_dotenv
+import uuid
+#from dotenv import load_dotenv
+import json
+from google.api_core.datetime_helpers import DatetimeWithNanoseconds
 
 app = Flask(__name__)
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -14,27 +16,30 @@ Session(app)
 user = User()
 
 # .env ファイルを読み込む
-load_dotenv()
+#load_dotenv()
 GOOGLE_MAP_KEY = os.getenv('GOOGLE_MAP_KEY')
+
+try:
+    with open("/etc/secrets/loginapi.json", 'r') as file:
+        loginapi_json_value = json.load(file)
+except FileNotFoundError:
+    # discordからダウンロードしてね♡
+    with open("./static/js/loginapi.json", 'r') as file:
+        loginapi_json_value = json.load(file)
 
 # デフォルトの緯度と経度を設定
 default_lat = 35.6764
 default_lng = 139.6500
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def login():
-
-    if request.method == 'GET':
-        User.UserEmail =  None
-        User.UserID =  None
-        return render_template(
-        'login.html'
+    user.UserEmail =  None
+    user.UserID =  None
+    return render_template(
+        'login.html', loginapi_json_value = loginapi_json_value
     )
-    else:
-        return render_template(
-            'login.html'
-        )
+
 
 
 @app.route('/toMyMap', methods=['GET','POST'])
@@ -43,15 +48,17 @@ def toMyMap():
         if user.UserEmail !=  None and user.UserID !=  None:
             session["user_id"] = user.UserID
             session["user_email"] = user.UserEmail
+            session['marker_list'] = firebase_db.get_allmarker_from_firestore(user.UserID)
             return redirect('/my-map')
         else:
             return render_template(
-                'login.html'
+                'login.html',loginapi_json_value=loginapi_json_value
             )
     else:
         userData = request.json
         user.UserEmail = userData['User']['email']
         user.UserID = userData['User']['uid']
+        firebase_db.setUser(user) #firebaseのコレクション作成＆データ入力
         return jsonify({'message': 'Success'})
     
 
@@ -78,8 +85,8 @@ def map_page():
             description = request.form.get('description')
             date = datetime.datetime.now()
             ts = datetime.datetime.timestamp(date)
-            locationid = "fake id" #ここ変える
-            map_marker = {"label": label, "lat": float(lat), "lng": float(lng), "description": description, 'date': ts, 'locationid': locationid}
+            locationid = uuid.uuid4()#場所ごとにuniqueなid生成
+            map_marker = {"label": label, "lat": float(lat), "lng": float(lng), "description": description, "date": ts, 'locationid': locationid}
             # Firestoreにマーカー情報を保存
             firebase_db.save_marker_to_firestore(map_marker, user.UserID, locationid)
 
@@ -96,22 +103,39 @@ def map_page():
         else:
             # ログインページをレンダリング
             return render_template(
-                'login.html'
+                'login.html',loginapi_json_value = loginapi_json_value
             )
+    data = {
+        "google_map_key": GOOGLE_MAP_KEY,
+        "loginapi_json_value": loginapi_json_value
+    }
+
+    lat = session.get("lat", default_lat)
+    lng = session.get("lng", default_lng)
+    marker_list = session.get("marker_list", [])
 
     # マップページをレンダリング
-    return render_template("mymap.html", google_map_key=GOOGLE_MAP_KEY) 
+    return render_template("mymap.html", data=json.dumps(data), lat=lat, lng=lng, marker_list=marker_list) 
 
 @app.route('/CreateAccount', methods=['GET','POST'])
 def CreateAccount():
     return render_template(
-        'createAccount.html'
+        'createAccount.html',loginapi_json_value=loginapi_json_value
     )
 
+@app.template_filter('get_date_time')
+def get_date_time(ts):
+    # タイムスタンプを日付と時刻に変換
+    if ts and (type(ts) is float or type(ts) is DatetimeWithNanoseconds):
+        time = datetime.datetime.fromtimestamp(ts if type(ts) is float else ts.timestamp())
+        return time.strftime("%Y/%m/%d, %H:%M:%S")
+    else:
+        return "Not Available"
+    
 @app.route('/ChangePassword', methods=['GET','POST'])
 def ChangePassword():
     return render_template(
-        'ChangePassword.html'
+        'ChangePassword.html',loginapi_json_value=loginapi_json_value
     )
 
 @app.route('/logout', methods=['POST'])
@@ -123,4 +147,5 @@ def logout():
     return redirect(url_for('login'))
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
