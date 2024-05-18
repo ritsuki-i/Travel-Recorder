@@ -172,10 +172,10 @@ function initMap(lat, lng, zoom) {
   myMap = new google.maps.Map(document.getElementById("map"), {
     zoom: zoom,
     center: center,
-    styles: mapStyles//地図のスタイリングapril4th
+    styles: mapStyles//地図のスタイリング
   });
 
-  // マップマーカーの情報があれば、マーカーをマップに追加. List 対応 6 april Ian
+  // マップマーカーの情報があれば、マーカーをマップに追加.
   // Initialize and add markers
     if (mapParams.mapMarkers) {
       mapParams.mapMarkers.forEach((mapMarker) => {
