@@ -1,7 +1,7 @@
 from flask import Flask, redirect, render_template, request, session, url_for, jsonify
 from flask_session import Session
 from src import firebase_db
-from src.User import User
+from src.user import User
 from src.lat_lng_finder import get_lat_lng
 import datetime
 import os
@@ -27,11 +27,11 @@ login_api_json = json.loads(os.getenv("LOGIN_API_KEY"))
 default_lat = 35.6764
 default_lng = 139.6500
 
-@app.route('/login_api_json', methods=['GET'])
+@app.route('/login-api-json', methods=['GET'])
 def get_login_api_json():
     return jsonify(login_api_json)
 
-@app.route('/google_map_key', methods=['GET'])
+@app.route('/google-map-key', methods=['GET'])
 def get_google_map_key():
     return jsonify({'google_map_key': google_map_key})
 
@@ -46,14 +46,14 @@ def login():
         'login.html'
     )
 
-@app.route('/toMyMap', methods=['GET','POST'])
-def toMyMap():
+@app.route('/to-my-map', methods=['GET','POST'])
+def to_my_map():
     if request.method == 'GET':
         if user.UserEmail !=  None and user.UserID !=  None:
             session["user_id"] = user.UserID
             session["user_email"] = user.UserEmail
             session['marker_list'] = firebase_db.get_allmarker_from_firestore(user.UserID)
-            return redirect('/my-map')
+            return redirect(url_for('map_page'))
         else:
             return render_template(
                 'login.html'
@@ -66,7 +66,7 @@ def toMyMap():
         return jsonify({'message': 'Success'})
     
 
-# static/js/map.js, templates/my-map.html, src/lat_lng_finder.py, app.pyのmap_page()を追加
+# static/js/myMap.js, templates/my-myMap.html, src/lat_lng_finder.py, app.pyのmap_page()を追加
 # 今の時点でデータベースに入れるのは[ 緯度, 経度, ユーザが入力した名前, ユーザが入力したデスクリプション ]
 # データベースはまだ設定されていないから、今まだ一個のマーカーしか見せないようにしている。
 @app.route('/my-map', methods=['GET', 'POST'])
@@ -122,8 +122,8 @@ def map_page():
     # マップページをレンダリング
     return render_template("my-map.html", lat=default_lat, lng=default_lng, marker_list=marker_list)
 
-@app.route('/CreateAccount', methods=['GET','POST'])
-def CreateAccount():
+@app.route('/create-account', methods=['GET','POST'])
+def create_account():
     return render_template(
         'create-account.html'
     )
@@ -137,8 +137,8 @@ def get_date_time(ts):
     else:
         return "Not Available"
     
-@app.route('/ChangePassword', methods=['GET','POST'])
-def ChangePassword():
+@app.route('/change-password', methods=['GET','POST'])
+def change_password():
     return render_template(
         'change-password.html'
     )

@@ -146,7 +146,7 @@ body{
 
 
 
-.EmailPassLogin{
+.email-pass-login{
     padding-left: 25px;
     padding-top:20px;
     padding-bottom:10px;
@@ -155,7 +155,7 @@ body{
 
 
 
-.EmailLogin ,.PassLogin{
+.email-login ,.pass-login{
     border: none; /* 枠を削除 */
     border-bottom: 1px solid ivory; /* 下線を追加 */
     background-color: transparent; /* 背景を透明にする */
@@ -171,7 +171,7 @@ body{
     
 }
 
-.EmailLogin #LoginEmail,.PassLogin #LoginPass{
+.email-login #login-email,.pass-login #login-pass{
     border: none;
     background-color: transparent;
     color: ivory; 
@@ -219,7 +219,7 @@ body{
 }
 
 
-#Account{
+#account{
     background-color: transparent; 
     border: none;
     color: ivory;
@@ -232,13 +232,13 @@ body{
     margin-right:10px;
 }
 
-#Account:hover {
+#account:hover {
   transition-duration: 0.5s;
   color:rgb(178, 232, 229);
 }
 
 
-.AccountBordering{
+.account-bordering{
     display: block;
     width:500px;
     margin:0 auto;
@@ -247,7 +247,7 @@ body{
 }
 
 @media screen and (max-width:500px) {
-  .container, .AccountBordering, .waves{
+  .container, .account-bordering, .waves{
     width: 100vw;
   }
   #menu ul li{
@@ -256,7 +256,7 @@ body{
   ul{
     padding-inline-start: 0px;
   }
-  #Account{
+  #account{
     color: black;
     font-weight: bold;
   }
