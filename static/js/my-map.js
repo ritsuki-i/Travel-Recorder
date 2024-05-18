@@ -316,18 +316,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /*りつき作*/ 
   const linkBtn = document.getElementById("link-btn");
+  const linkBtnPhone = document.getElementById("link-btn-phone");
   const userId = document.getElementById("user-id").textContent;
 
   if (userId) {
     linkBtn.addEventListener('click', async () => {
-          try {
-              await navigator.share({ title: document.title, url: "https://travel-recorder.onrender.com//view-map?user_id=" + userId });
-          } catch (error) {
-              console.error(error);
-          }
-      });
+        try {
+            const shareData = {
+                title: document.title,
+                url: `https://travel-recorder.onrender.com/view-map?user_id=${userId}`
+            };
+            await navigator.share(shareData);
+            console.log('Sharing successful');
+        } catch (error) {
+            console.error('Error sharing:', error);
+            alert('Sharing failed: ' + error.message);
+        }
+    });
+    linkBtnPhone.addEventListener('click', async () => {
+      try {
+          const shareData = {
+              title: document.title,
+              url: `https://travel-recorder.onrender.com/view-map?user_id=${userId}`
+          };
+          await navigator.share(shareData);
+          console.log('Sharing successful');
+      } catch (error) {
+          console.error('Error sharing:', error);
+          alert('Sharing failed: ' + error.message);
+      }
+    });
   } else {
-      console.error('Element with id "user_id" not found.');
+      console.error('User ID not found or invalid.');
   }
 });
 
