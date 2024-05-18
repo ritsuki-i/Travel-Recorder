@@ -192,14 +192,17 @@ function initMap(lat, lng, zoom) {
 
       // Add click listener to each marker
        marker.addListener('click', () => {
+        const date = new Date(mapMarker.date*1000);
           const contentString = `<div>
               <p><strong>Name:</strong> ${mapMarker.label ? mapMarker.label : 'No Label'}</p>
               <p><strong>Description:</strong> ${mapMarker.description ? mapMarker.description : 'No Description'}</p>
+              <p><strong>Date:</strong>${date ? date.toLocaleString() : 'No Description'}</p>
               <button onclick="deleteMarker('${mapMarker.locationid}')">Delete Marker</button>
           </div>`;
 
           infoWindow.setContent(contentString);
           infoWindow.open(myMap, marker);
+          console.log(typeof(mapMarker.date))
       });
     });
   }
