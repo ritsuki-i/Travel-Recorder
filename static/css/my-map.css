@@ -130,8 +130,16 @@ p{
  .vertical-row td {
    border: 1px solid black;
    padding: 8px;
-   
  }
+
+ /* Ensure images do not exceed cell width */
+ #detail-table-pc .image-container img {
+   width: 100%; 
+}
+
+#detail-table-pc{
+   width: 40vw;
+}
 
  tbody{
    display:flex;
@@ -221,3 +229,77 @@ table:hover {
     width: 95%;
 }
 
+#right-half-phone{
+   display: none;
+}
+
+
+
+@media screen and (max-width:500px) {
+   #container {
+      display: block;
+      margin: 0 auto;
+      height: 80vh;
+   }
+
+   #mapstyling {
+      position: fixed;
+      bottom: 0;
+      display: block;
+      width: 90vw;
+      height: 50vh;
+      padding: 5vw;
+      background-color: rgba(252, 252, 252, 0.544)
+   }
+
+   #map {
+      height: 50vh;
+      width: 90vw;
+   }
+
+   #detail-table-pc{
+      width: 100vw;
+   }
+
+   #header{
+      flex-wrap: wrap;
+      height: fit-content;
+   }
+
+   #sub-title{
+      font-size: 30px;
+   }
+
+   #right-half-phone{
+      display: block;
+      margin-left: 20px;
+   }
+
+   #email-and-logout{
+      display: flex;
+   }
+
+   #logout-btn{
+      margin-left: 20px;
+   }
+
+   #right-half{
+      display: none;
+   }
+
+
+   #link-btn{
+      width: fit-content;
+      margin-bottom: 20px;
+   }
+
+   #detail-table-pc {
+      width: 100%; 
+      table-layout: fixed; 
+   }
+
+   #phone-margin{
+      height: 53vh;
+   }
+
+}
