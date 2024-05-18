@@ -54,7 +54,7 @@ def save_marker_to_firestore(marker_info, userId, locationid):
         'locationid': str(marker_info['locationid'])
     })
     
-# Function to upload image to Firebase Storage and return the URL
+#Firestorageにimageをアップロードしてurlを返す
 def upload_image_to_storage(user_id, location_id, image_file):
     blob = bucket.blob(f"{user_id}/{location_id}/{image_file.filename}")
     blob.upload_from_file(image_file)
@@ -74,15 +74,7 @@ def save_marker_to_firestore_with_image(marker_info, user_id, location_id, image
         markers_ref = db.collection(collectionName).document(str(user_id)).collection(colectionLocate).document(str(location_id))
         markers_ref.set(marker_info)
         i=i+1
-#Firestorageにimageをアップロードしてurlを返す
-def upload_image_to_storage(userId, locationid,image_file):
-    blob = bucket.blob(f"{userId}/{locationid}/{image_file.filename}")
-    blob.upload_from_file(image_file)
-    blob.make_public()
-    return blob.public_url
-
-
-    
+  
 #Cloud Firestoreのサブコレクションにある全てのドキュメントの情報をすべて取得
 def get_allmarker_from_firestore(Id):
     docs = db.collection(collectionName).document(Id).collection(colectionLocate).stream()
@@ -111,6 +103,26 @@ def delete_marker_from_firestore(Id, LocationId):
     else:
         print("No such document!")
 
+#Firestorageからimageをデリート
+def delete_image_from_storage(user_id, location_id):
+    blob = bucket.blob(f"{user_id}/{location_id}")
+    blob.delete()
+    print('File deleted successfully')
+    
+
+# Function to save marker and image to Firestore
+def save_marker_to_firestore_with_image(marker_info, user_id, location_id, image_files):
+    i=0
+    for image_file in image_files:
+        print(type(image_file))
+        image_url = upload_image_to_storage(user_id, location_id, image_file)
+        marker_info['image_url'+str(i)] = image_url
+        # marker_infoのUUIDオブジェクトを文字列に変換
+        marker_info['locationid'] = str(marker_info['locationid'])
+        markers_ref = db.collection(collectionName).document(str(user_id)).collection(colectionLocate).document(str(location_id))
+        markers_ref.set(marker_info)
+        i=i+1
+  
 #ex
 User=User()
 User.UserID="15822096" #<-自動で割当(uuid)
