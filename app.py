@@ -100,7 +100,7 @@ def map_page():
                 #imagefile が1こ以上ある場合
                 firebase_db.save_marker_to_firestore_with_image(map_marker, user.UserID, locationid, image_files)
             # セッションにマーカー情報を保存
-            session["lat"], session["lng"] = lat, lng
+            session["lat"], session["lng"] = default_lat, default_lng
             session['marker_list'].append(map_marker)
             return redirect(url_for('map_page'))
 
@@ -115,12 +115,10 @@ def map_page():
                 'login.html'
             )
 
-    lat = session.get("lat", default_lat)
-    lng = session.get("lng", default_lng)
-    marker_list = session.get("marker_list", [])
+    session['marker_list'] = firebase_db.get_allmarker_from_firestore(user.UserID)
 
     # マップページをレンダリング
-    return render_template("my-map.html", lat=default_lat, lng=default_lng, marker_list=marker_list)
+    return render_template("my-map.html")
 
 @app.route('/create-account', methods=['GET','POST'])
 def create_account():
