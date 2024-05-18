@@ -40,8 +40,7 @@ def get_google_map_key():
 def login():
     user.UserEmail =  None
     user.UserID =  None
-    for key in list(session.keys()):
-        session.pop(key)
+    session['marker_list'] = []
     session.clear()
     return render_template(
         'login.html'
@@ -142,8 +141,7 @@ def ChangePassword():
 @app.route('/logout', methods=['POST'])
 def logout():
     # セッションの全てのキーを削除
-    for key in list(session.keys()):
-        session.pop(key)
+    session['marker_list'] = []
     session.clear()
     # ログインページにリダイレクト
     return redirect(url_for('login'))
