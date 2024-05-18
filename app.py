@@ -90,9 +90,16 @@ def map_page():
             date = datetime.datetime.now()
             ts = datetime.datetime.timestamp(date)
             locationid = uuid.uuid4()#場所ごとにuniqueなid生成
+            
+            image_file = request.files.get('image_input')
+            
+            
+            
             map_marker = {"label": label, "lat": float(lat), "lng": float(lng), "description": description, "date": ts, 'locationid': locationid}
             # Firestoreにマーカー情報を保存
             firebase_db.save_marker_to_firestore(map_marker, user.UserID, locationid)
+            firebase_db.save_marker_to_firestore_with_image(map_marker, user.UserID, locationid, image_file)
+            
 
             # セッションにマーカー情報を保存
             session["lat"], session["lng"] = lat, lng
