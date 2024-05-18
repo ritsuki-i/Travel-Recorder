@@ -74,8 +74,6 @@ def save_marker_to_firestore_with_image(marker_info, user_id, location_id, image
         markers_ref = db.collection(collectionName).document(str(user_id)).collection(colectionLocate).document(str(location_id))
         markers_ref.set(marker_info)
         i=i+1
-        
-
 #Firestorageにimageをアップロードしてurlを返す
 def upload_image_to_storage(userId, locationid,image_file):
     blob = bucket.blob(f"{userId}/{locationid}/{image_file.filename}")

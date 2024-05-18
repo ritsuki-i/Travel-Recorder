@@ -99,8 +99,6 @@ def map_page():
             if(str(image_files)!="[<FileStorage: '' ('application/octet-stream')>]"):
                 #imagefile が1こ以上ある場合
                 firebase_db.save_marker_to_firestore_with_image(map_marker, user.UserID, locationid, image_files)
-            
-
             # セッションにマーカー情報を保存
             session["lat"], session["lng"] = lat, lng
             session['marker_list'].append(map_marker)
