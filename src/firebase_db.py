@@ -27,10 +27,7 @@ db = firestore.client()
 
 collectionName="name" #'name'-->コレクション名
 colectionLocate="location" # 'location'-->サブコレクション名
-docs_list = [] #<-マップマーカー用辞書のリスト
-
-
-
+ #<-マップマーカー用辞書のリスト
 
 #Cloud Firestoreのコレクションに個人のデータを格納
 def setUser(User):
@@ -58,6 +55,7 @@ def save_marker_to_firestore(marker_info,userID,locationid):
 #Cloud Firestoreのサブコレクションにある全てのドキュメントの情報をすべて取得
 def get_allmarker_from_firestore(Id):
     docs = db.collection(collectionName).document(Id).collection(colectionLocate).stream()
+    docs_list = []
     for doc in docs:
         #Firestoreから取得したドキュメントを辞書のリストとして格納
         docs_list.append(doc.to_dict())
