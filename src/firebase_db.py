@@ -63,17 +63,17 @@ def upload_image_to_storage(user_id, location_id, image_file):
     return blob.public_url
 
 # Function to save marker and image to Firestore
-def save_marker_to_firestore_with_image(marker_info, user_id, location_id, image_file):
-    print(type(image_file))
-    image_url = upload_image_to_storage(user_id, location_id, image_file)
-    marker_info['image_url'] = image_url
-
-    # marker_infoのUUIDオブジェクトを文字列に変換
-    marker_info['locationid'] = str(marker_info['locationid'])
-
-    markers_ref = db.collection(collectionName).document(str(user_id)).collection(colectionLocate).document(str(location_id))
-    markers_ref.set(marker_info)
-
+def save_marker_to_firestore_with_image(marker_info, user_id, location_id, image_files):
+    i=0
+    for image_file in image_files:
+        print(type(image_file))
+        image_url = upload_image_to_storage(user_id, location_id, image_file)
+        marker_info['image_url'+str(i)] = image_url
+        # marker_infoのUUIDオブジェクトを文字列に変換
+        marker_info['locationid'] = str(marker_info['locationid'])
+        markers_ref = db.collection(collectionName).document(str(user_id)).collection(colectionLocate).document(str(location_id))
+        markers_ref.set(marker_info)
+        i=i+1
 #Firestorageにimageをアップロードしてurlを返す
 def upload_image_to_storage(userId, locationid,image_file):
     blob = bucket.blob(f"{userId}/{locationid}/{image_file.filename}")
