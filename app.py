@@ -167,6 +167,36 @@ def delete_marker():
     else:
         return jsonify({'success': False, 'error': 'Location ID is required'})
 
+
+@app.route('/view-map', methods=['GET', 'POST'])
+def view_map():
+    session["lat"], session["lng"] = default_lat, default_lng
+    # デフォルトの緯度と経度をセッションに設定
+    if request.method == 'POST':
+        # フォームの種類を取得
+        form_type = request.form.get('form_type')
+        if form_type == 'search_location':
+            # ユーザーが入力した場所名から緯度と経度を検索
+            location = request.form.get('location')
+            lat_lng = get_lat_lng(location) if location else (default_lat, default_lng)
+            # セッションに緯度と経度を保存
+            session["lat"], session["lng"] = lat_lng if lat_lng else (default_lat, default_lng)
+
+
+    # パラメーターからユーザーIDを読み取る
+    view_user_id = request.args.get('user_id', default=None)
+
+    if view_user_id:
+        # 指定されたユーザーIDのマーカーリストを取得
+        marker_list = firebase_db.get_allmarker_from_firestore(view_user_id)
+    else:
+        # ユーザーIDがない場合
+        return "User ID is Invalid", 400
+
+    # ビュー専用マップページをレンダリング
+    return render_template("view-map.html", marker_list=marker_list)
+
+
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=True)
