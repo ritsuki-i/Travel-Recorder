@@ -136,12 +136,23 @@ function initMap(lat, lng, zoom) {
         icon: pinIcon,
         label: mapMarker.label ? mapMarker.label : 'No Label'
       });
-
       // Add click listener to each marker
        marker.addListener('click', () => {
+        const date = new Date(mapMarker.date*1000);
+        let imageHtml = '';
+        if (mapMarker.image_urls && mapMarker.image_urls.length > 0) {
+            imageHtml = '<p><strong>Images:</strong><div class="image-container" id="image">';
+            mapMarker.image_urls.forEach(image_url => {
+                imageHtml += `<img class="marker-image" src="${image_url}" alt="Marker Image">`;
+            });
+            imageHtml += '</div></p>';
+        }
+
           const contentString = `<div>
               <p><strong>Name:</strong> ${mapMarker.label ? mapMarker.label : 'No Label'}</p>
               <p><strong>Description:</strong> ${mapMarker.description ? mapMarker.description : 'No Description'}</p>
+              <p><strong>Date:</strong>${date ? date.toLocaleString() : 'No Description'}</p>
+              ${imageHtml}
           </div>`;
 
           infoWindow.setContent(contentString);
