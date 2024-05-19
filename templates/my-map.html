@@ -120,7 +120,7 @@
       let mapParams = {
         lat: {{ session["lat"] }},
         lng: {{ session["lng"] }},
-        zoom: 15,
+        zoom: 6,
         mapMarkers: {{ session["marker_list"] | tojson | safe }}
       };
   </script>
