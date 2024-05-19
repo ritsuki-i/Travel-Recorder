@@ -188,5 +188,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  function toggleImages(imageContainerId) {
+    const imageContainer = document.getElementById(imageContainerId);
+    if (imageContainer.style.display === "none" || imageContainer.style.display === "") {
+      imageContainer.style.display = "block";
+    } else {
+      imageContainer.style.display = "none";
+    }
+  }
+
 // Google Maps APIの読み込みを開始する
 loadGoogleMapsAPI();
