@@ -51,7 +51,12 @@
 
   <div id="container">
 
-    <div id="searchstyling">
+    <div id="switch-btn-phone">
+      <button id="map-btn">マップ</button>
+      <button id="table-btn">リスト</button>
+    </div>
+
+    <div id="searchstyling" class="invisible-element">
       <div id="searchform">
       <!-- 場所検索用のフォーム -->
       <form action="/my-map" method="POST">
@@ -95,9 +100,8 @@
     {% endif %}
 
     </div>
-    <p id="phone-margin"></p>
 
-    <div id="mapstyling">
+    <div id="mapstyling" class="visible-element">
       <!-- Googleマップを表示するためのdiv -->
       <div id="map"></div>
     </div>
