@@ -159,7 +159,7 @@ function initMap(lat, lng, zoom) {
 
     const svg = `
     <svg width="${svgWidth}" height="${svgHeight}" xmlns="http://www.w3.org/2000/svg">
-        <rect x="10" y="10" width="${estimatedTextWidth}" height="25" rx="${borderRadius}" ry="${borderRadius}"
+        <rect x="10" y="10" width="${estimatedTextWidth}" height="25"
         style="fill: #ffffff; stroke: #000000; stroke-width: 2;" />
     </svg>`;
     return 'data:image/svg+xml;base64,' + btoa(svg);
