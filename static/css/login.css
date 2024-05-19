@@ -244,6 +244,24 @@ body{
   color:rgb(178, 232, 229);
 }
 
+#change-password{
+    background-color: transparent;
+    border: none;
+    color: ivory;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    padding: 5px 5px;
+    cursor: pointer;
+    outline: none;
+    display: inline-block;
+    margin-right:10px;
+}
+
+#change-password:hover {
+  transition-duration: 0.5s;
+  color:rgb(178, 232, 229);
+}
+
 
 .account-bordering{
     display: block;
@@ -264,6 +282,10 @@ body{
     padding-inline-start: 0px;
   }
   #account{
+    color: black;
+    font-weight: bold;
+  }
+  #change-password{
     color: black;
     font-weight: bold;
   }
