@@ -195,10 +195,7 @@ input[type="file"] {
 
 .image-container .marker-image {
    max-width: 100%;
-   /* 画像の幅を指定 */
    height: auto;
-   /* 高さは自動調整 */
-
 }
 
 .info-box {
