@@ -160,5 +160,22 @@ function centerMapOnMarker(lat, lng) {
   myMap.setZoom(15);  // You can adjust the zoom level as needed
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+    const mapBtn = document.getElementById("map-btn");
+    const tableBtn = document.getElementById("table-btn");
+    const mapStyling = document.getElementById("mapstyling");
+    const searchStyling = document.getElementById("searchstyling");
+  
+    mapBtn.addEventListener('click',function(){
+      mapStyling.className = 'visible-element';
+      searchStyling.className = 'invisible-element';
+    });
+  
+    tableBtn.addEventListener('click',function(){
+      mapStyling.className = 'invisible-element';
+      searchStyling.className = 'visible-element';
+    });
+  });
+
 // Google Maps APIの読み込みを開始する
 loadGoogleMapsAPI();

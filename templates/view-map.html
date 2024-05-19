@@ -37,7 +37,12 @@
 
   <div id="container">
 
-    <div id="searchstyling">
+    <div id="switch-btn-phone">
+      <button id="map-btn">マップ</button>
+      <button id="table-btn">リスト</button>
+    </div>
+
+    <div id="searchstyling" class="invisible-element">
       <div id="searchform">
       <!-- 場所検索用のフォーム -->
       <form action="/view-map" method="POST">
@@ -59,6 +64,17 @@
           <th scope="row">{{ marker["label"] }}</th>
           <td>{{ marker["description"] }}</td>
           <td>{{ marker["date"] | get_date_time }}</td>
+          {% if marker["image_urls"] %}
+                <td>
+                    <div class="image-container" id="image">
+                        {% for image_url in marker["image_urls"] %}
+                        <img id="marker-image" src="{{ image_url }}" alt="Marker Image">
+                        {% endfor %}
+                    </div>
+                </td>
+                {% else %}
+                <td>No Image</td>
+                {% endif %}
         </tr>
         {% endfor %}
       </table>
@@ -66,7 +82,7 @@
 
     </div>
 
-    <div id="mapstyling">
+    <div id="mapstyling" class="visible-element">
       <!-- Googleマップを表示するためのdiv -->
       <div id="map"></div>
     </div>

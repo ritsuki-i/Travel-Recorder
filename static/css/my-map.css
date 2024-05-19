@@ -82,7 +82,6 @@ p {
    display: flex;
    flex-direction: row;
    margin: 0 auto;
-   margin-top: 15px;
 }
 
 #searchstyling {
@@ -90,7 +89,7 @@ p {
    font-weight: bold;
    background-color: transparent;
    height: 90vh;
-   width: 30vw;
+   width: 32vw;
    overflow-y: scroll;
 }
 
@@ -132,6 +131,8 @@ p {
 .vertical-row td {
    border: 1px solid black;
    padding: 8px;
+   width: 27vw;
+   overflow-wrap:break-word;
 }
 
 /* Ensure images do not exceed cell width */
@@ -248,6 +249,14 @@ input[type="file"] {
    display: none;
 }
 
+td button {
+  display: block;
+  margin: 0 auto;
+   font-family: 'Courier New', Courier, monospace;
+  background-color: white; /* Green background */
+  border: 1px black; /* Remove borders */
+  cursor: pointer; /* Add a pointer cursor on hover */
+}
 
 
 @media screen and (max-width:500px) {
@@ -266,6 +275,11 @@ input[type="file"] {
       background-color: rgba(252, 252, 252, 0.544)
    }
 
+   #searchstyling {
+      height: 90vh;
+      width: 100vw;
+   }
+
    #map {
       height: 70vh;
       width: 96vw;
@@ -273,6 +287,11 @@ input[type="file"] {
 
    #detail-table-pc {
       width: 100vw;
+   }
+
+   .vertical-row th,
+   .vertical-row td {
+      width: 92vw;
    }
 
    #header {
@@ -309,8 +328,7 @@ input[type="file"] {
       margin-bottom: 20px;
    }
 
-   #detail-table-pc {
-      width: 100%;
+   #detail-table-pc{
       table-layout: fixed;
    }
 
@@ -335,5 +353,6 @@ input[type="file"] {
    #link-btn-phone{
       margin-bottom: 10px;
    }
+
 
 }
