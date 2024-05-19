@@ -1,4 +1,12 @@
 @charset "UTF-8";
+
+@font-face{
+  font-family: 'MoonLight';
+  src: url('fonts\Moon Light.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body{
     margin:0;
     background: linear-gradient(to right, #004f80,#008080 );
@@ -94,9 +102,8 @@ body{
     margin:0 auto;
     padding: 40px;
     text-align:center;
-    font-weight:bold;
     font-size: x-large;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     color:ivory;
 
 }
