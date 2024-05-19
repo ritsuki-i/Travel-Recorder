@@ -210,7 +210,7 @@ function initMap(lat, lng, zoom) {
         if (mapMarker.image_urls && mapMarker.image_urls.length > 0) {
             imageHtml = '<p><strong>Images:</strong><div class="image-container" id="image">';
             mapMarker.image_urls.forEach(image_url => {
-                imageHtml += `<img id="marker-image" src="${image_url}" alt="Marker Image">`;
+                imageHtml += `<img class="marker-image" src="${image_url}" alt="Marker Image">`;
             });
             imageHtml += '</div></p>';
         }
@@ -313,30 +313,6 @@ async function deleteMarker(locationid) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  /*イアン*/
-  /*
-  const linkBtn = document.getElementById("link-btn");
-  const infoBox = document.getElementById("info-box");
-  const closeBtn = document.getElementsByClassName("close-btn")[0];
-  const shareLinkInput = document.getElementById("share-link");
-  const userId = document.getElementById("user-id").textContent;
-
-  linkBtn.addEventListener("click", function () {
-    shareLinkInput.value = `http://127.0.0.1:5000/view-map?user_id=${userId}`;
-    infoBox.style.display = "block";
-  });
-
-  closeBtn.addEventListener("click", function () {
-    infoBox.style.display = "none";
-  });
-
-  window.addEventListener("click", function (event) {
-    if (event.target === infoBox) {
-      infoBox.style.display = "none";
-    }
-  });*/
-
-  /*りつき作*/ 
   const linkBtn = document.getElementById("link-btn");
   const linkBtnPhone = document.getElementById("link-btn-phone");
   const userId = document.getElementById("user-id").textContent;
@@ -372,6 +348,24 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error('User ID not found or invalid.');
   }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const mapBtn = document.getElementById("map-btn");
+  const tableBtn = document.getElementById("table-btn");
+  const mapStyling = document.getElementById("mapstyling");
+  const searchStyling = document.getElementById("searchstyling");
+
+  mapBtn.addEventListener('click',function(){
+    mapStyling.className = 'visible-element';
+    searchStyling.className = 'invisible-element';
+  });
+
+  tableBtn.addEventListener('click',function(){
+    mapStyling.className = 'invisible-element';
+    searchStyling.className = 'visible-element';
+  });
+});
+
 
 // Google Maps APIの読み込みを開始する
 loadGoogleMapsAPI();

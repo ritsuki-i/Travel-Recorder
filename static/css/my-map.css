@@ -6,7 +6,6 @@ html {
 
 body {
    margin: 0;
-   height: 1200px;
    /*background: linear-gradient(to bottom, #004f80,#008080 );*/
    background: linear-gradient(to right, #004f80, #008080);
    /*background-color: teal;*/
@@ -30,7 +29,8 @@ p {
 #sub-title {
    margin-top: 15px;
    margin-left: 10px;
-   font-size: 21px;
+   font-size: 30px;
+   padding-bottom: 20px;
 }
 
 #left-half {
@@ -82,15 +82,16 @@ p {
    display: flex;
    flex-direction: row;
    margin: 0 auto;
-   height: 1200px;
+   margin-top: 15px;
 }
 
 #searchstyling {
    color: ivory;
    font-weight: bold;
-   flex: 1;
    background-color: transparent;
-
+   height: 90vh;
+   width: 30vw;
+   overflow-y: scroll;
 }
 
 #searchform {
@@ -104,7 +105,6 @@ p {
    flex: 4;
    justify-content: center;
    align-items: center;
-
 }
 
 
@@ -144,7 +144,7 @@ p {
 }
 
 #detail-table-pc {
-   width: 30vw;
+   width: 29vw;
 }
 
 tbody {
@@ -193,8 +193,8 @@ input[type="file"] {
    flex-wrap: wrap;
 }
 
-.marker-image {
-   width: 10px;
+.image-container .marker-image {
+   max-width: 100%;
    /* 画像の幅を指定 */
    height: auto;
    /* 高さは自動調整 */
@@ -247,6 +247,10 @@ input[type="file"] {
    display: none;
 }
 
+#switch-btn-phone{
+   display: none;
+}
+
 
 
 @media screen and (max-width:500px) {
@@ -257,18 +261,17 @@ input[type="file"] {
    }
 
    #mapstyling {
-      position: fixed;
       bottom: 0;
       display: block;
-      width: 90vw;
-      height: 50vh;
-      padding: 5vw;
+      width: 100vw;
+      height: 70vh;
+      padding: 2vw;
       background-color: rgba(252, 252, 252, 0.544)
    }
 
    #map {
-      height: 50vh;
-      width: 90vw;
+      height: 70vh;
+      width: 96vw;
    }
 
    #detail-table-pc {
@@ -295,6 +298,8 @@ input[type="file"] {
 
    #logout-btn {
       margin-left: 20px;
+      font-size: small;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
    }
 
    #right-half {
@@ -312,8 +317,26 @@ input[type="file"] {
       table-layout: fixed;
    }
 
-   #phone-margin {
-      height: 53vh;
+   #switch-btn-phone{
+      display: block;
+      text-align: center;
+      margin: 2vh 0;
+   }
+
+   #switch-btn-phone button{
+      margin: 0 20px;
+   }
+
+   .invisible-element{
+      display: none !important;
+   }
+
+   .visible-element{
+      display: block;
+   }
+
+   #link-btn-phone{
+      margin-bottom: 10px;
    }
 
 }
