@@ -152,17 +152,26 @@ function initMap(lat, lng, zoom) {
 
   const createSVGIcon = (text) => {
     // Estimate the width based on the text length. Each character approximately 8px wide at 12px font size, plus padding
-    const estimatedTextWidth = Math.max(60, text.length * 8 ); // Minimum width 100px
-    const svgWidth = estimatedTextWidth + 20; // Add some padding to the width
-    const svgHeight = 40; // Fixed height
-    const borderRadius = 10;
+    const estimateTextWidth = (text) => {
+        let width = 0;
+        for (let char of text) {
+          // Full-width characters (e.g., Japanese) are approximately 16px wide at 12px font size
+          // Half-width characters (e.g., English) are approximately 8px wide
+          width += (char.match(/[^\x00-\x7F]/) ? 17 : 10);
+        }
+        return width;
+      };
 
-    const svg = `
-    <svg width="${svgWidth}" height="${svgHeight}" xmlns="http://www.w3.org/2000/svg">
-        <rect x="10" y="10" width="${estimatedTextWidth}" height="25" rx="${borderRadius}" ry="${borderRadius}"
-        style="fill: #ffffff; stroke: #000000; stroke-width: 2;" />
-    </svg>`;
-    return 'data:image/svg+xml;base64,' + btoa(svg);
+      const estimatedTextWidth = Math.max(70, estimateTextWidth(text)); // Minimum width 60px
+      const svgWidth = estimatedTextWidth + 20; // Add some padding to the width
+      const svgHeight = 40; // Fixed height
+
+      const svg = `
+      <svg width="${svgWidth}" height="${svgHeight}" xmlns="http://www.w3.org/2000/svg">
+          <rect x="10" y="10" width="${estimatedTextWidth}" height="25"
+          style="fill: #ffffff; stroke: #000000; stroke-width: 2;" />
+      </svg>`;
+      return 'data:image/svg+xml;base64,' + btoa(svg);
   };
 
 
@@ -187,7 +196,10 @@ function initMap(lat, lng, zoom) {
         position: {lat: parseFloat(mapMarker.lat), lng: parseFloat(mapMarker.lng)},
         map: myMap,
         icon: pinIcon,
-        label: mapMarker.label ? mapMarker.label : 'No Label'
+        label: {
+            text: mapMarker.label ? "📌" + mapMarker.label : 'No Label',
+            fontFamily: "'Courier New', Courier, monospace",
+          }
       });
 
       // Add click listener to each marker
