@@ -249,6 +249,14 @@ input[type="file"] {
    display: none;
 }
 
+td button {
+  display: block;
+  margin: 0 auto;
+   font-family: 'Courier New', Courier, monospace;
+  background-color: white; /* Green background */
+  border: 1px black; /* Remove borders */
+  cursor: pointer; /* Add a pointer cursor on hover */
+}
 
 
 @media screen and (max-width:500px) {
@@ -345,5 +353,6 @@ input[type="file"] {
    #link-btn-phone{
       margin-bottom: 10px;
    }
+
 
 }
