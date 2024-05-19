@@ -85,9 +85,9 @@
                 <td>{{ marker["date"] | get_date_time }}</td>
                 {% if marker["image_urls"] %}
                 <td>
-                                <button onclick="toggleImages('image-{{ marker['locationid'] }}')">画像表示/隠す</button>
+                  <button onclick="toggleImages('image-{{ marker['locationid'] }}')">画像表示/隠す</button>
 
-                    <div class="image-container" id="image-{{ marker['locationid'] }}">
+                    <div class="image-container" id="image-{{ marker['locationid'] }}" style="display: none;">
                         {% for image_url in marker["image_urls"] %}
                         <img id="marker-image" src="{{ image_url }}" alt="Marker Image">
                         {% endfor %}
