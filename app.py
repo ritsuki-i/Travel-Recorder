@@ -82,6 +82,10 @@ def map_page():
             # セッションに緯度と経度を保存
             session["lat"], session["lng"] = lat_lng if lat_lng else (default_lat, default_lng)
 
+            #session['marker_list'] = firebase_db.get_allmarker_from_firestore(user.UserID)
+            print("zoom=15")
+            return render_template("my-map.html", zoom=15)
+
         elif form_type == 'submit_location':
             # ユーザーがフォームに入力した緯度、経度、名前、説明を取得
             lat, lng = request.form.get('lat'), request.form.get('lng')
@@ -118,7 +122,7 @@ def map_page():
     session['marker_list'] = firebase_db.get_allmarker_from_firestore(user.UserID)
 
     # マップページをレンダリング
-    return render_template("my-map.html")
+    return render_template("my-map.html", zoom=6)
 
 @app.route('/create-account', methods=['GET','POST'])
 def create_account():
