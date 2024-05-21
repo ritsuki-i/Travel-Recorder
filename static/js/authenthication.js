@@ -8,6 +8,7 @@ import {
   signOut,
   sendEmailVerification,
   sendPasswordResetEmail,
+  signInAnonymously,
 } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
 
 /*import firebaseConfig from "./loginapi.json" assert { type: "json" };*/
@@ -42,14 +43,14 @@ async function fetchFirebaseConfig() {
             },
             body: JSON.stringify(dataToPython),
           })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("Data from Python:", data);
-            window.location.href = "/to-my-map";
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Data from Python:", data);
+              window.location.href = "/to-my-map";
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+            });
         })
         .catch((error) => {
           console.error("Error:", error);
@@ -67,7 +68,7 @@ async function fetchFirebaseConfig() {
           const dataToPython = { User: user, Token: token };
           const emailVerified = user.emailVerified;
 
-          if (emailVerified){
+          if (emailVerified) {
             fetch("/to-my-map", {
               method: "POST",
               headers: {
@@ -75,15 +76,15 @@ async function fetchFirebaseConfig() {
               },
               body: JSON.stringify(dataToPython),
             })
-            .then((response) => response.json())
-            .then((data) => {
-              console.log("Data from Python:", data);
-              window.location.href = "/to-my-map";
-            })
-            .catch((error) => {
-              alert(error);
-              console.error("Error:", error);
-            });
+              .then((response) => response.json())
+              .then((data) => {
+                console.log("Data from Python:", data);
+                window.location.href = "/to-my-map";
+              })
+              .catch((error) => {
+                alert(error);
+                console.error("Error:", error);
+              });
           } else {
             alert("メールアドレスの認証が完了しておりません");
           }
@@ -91,6 +92,41 @@ async function fetchFirebaseConfig() {
         .catch((error) => {
           alert("パスワードが正しくありません");
           console.error("Error:", error);
+        });
+    });
+    const guestLogin = document.getElementById("guest-account");
+    guestLogin?.addEventListener("click", () => {
+      signInAnonymously(auth)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          const userId = user.uid; // ユーザーIDの取得
+          const userEmail = user.email || ""; // 匿名ユーザーの場合、メールアドレスはないかもしれません
+
+          fetch("/to-my-map-guest", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ User: { uid: userId, email: userEmail } }),  // ユーザーIDとメールアドレスを送信
+          })
+            .then(response => {
+              if (!response.ok) {
+                return response.text().then(text => { throw new Error(text) });
+              }
+              return response.json();
+            })
+            .then(data => {
+              console.log("Data from Python:", data);
+              window.location.href = "/to-my-map";
+            })
+            .catch(error => {
+              console.error("Error:", error);
+              alert("An error occurred: " + error.message);
+            });
+        })
+        .catch(error => {
+          console.error("Error signing in anonymously:", error);
+          alert("An error occurred during sign in: " + error.message);
         });
     });
 
@@ -135,13 +171,13 @@ async function fetchFirebaseConfig() {
         alert("メールアドレスが入力されていません");
       } else {
         sendPasswordResetEmail(auth, inputEmail.value)
-        .then(() => {
-          alert("パスワード変更のメールを送信しました。送信されたメールからパスワードを変更してください。");
-        })
-        .catch((error) => {
-          alert("そのメールアドレスは登録されておりません。");
-          console.error(error);
-        });
+          .then(() => {
+            alert("パスワード変更のメールを送信しました。送信されたメールからパスワードを変更してください。");
+          })
+          .catch((error) => {
+            alert("そのメールアドレスは登録されておりません。");
+            console.error(error);
+          });
       }
     });
 
