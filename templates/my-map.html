@@ -5,6 +5,7 @@
   <link rel="stylesheet" href="../static/css/my-map.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../static/img/TravelRecorderIcon.png">
   <script src="../static/js/authenthication.js" defer type="module"></script>
   <script src="../static/js/table-sort.js" defer></script>
   <title>TravelRecorder</title>
@@ -15,14 +16,14 @@
   <div id="header">
     <div id="left-half">
       <div id="sub-title">
-      TravelRecorder
+        TravelRecorder
       </div>
-    
+
     </div>
 
 
     <div id="right-half">
-        
+
       <button type="button" id="link-btn">マップを共有</button>
       <p id="user_email">{{ session["user_email"] }}</p>
       <p id="user-id" style="display: none">{{ session["user_id"] }}</p>
@@ -40,9 +41,9 @@
           <button id="logout-btn" type="submit">ログアウト</button>
         </form>
       </div>
-        
+
       <button type="button" id="link-btn-phone">マップを共有</button>
-      
+
     </div>
 
   </div>
@@ -58,48 +59,49 @@
 
     <div id="searchstyling" class="invisible-element">
       <div id="searchform">
-      <!-- 場所検索用のフォーム -->
-      <form action="/my-map" method="POST">
-        <input type="hidden" name="form_type" value="search_location">
-        <label for="location">場所を検索：</label>
-        <input type="text" name="location" id="location" placeholder="場所名">
-        <input type="submit" value="Search">
-      </form>
+        <!-- 場所検索用のフォーム -->
+        <form action="/my-map" method="POST">
+          <input type="hidden" name="form_type" value="search_location">
+          <label for="location">場所を検索：</label>
+          <input type="text" name="location" id="location" placeholder="場所名">
+          <input type="submit" value="Search">
+        </form>
 
       </div>
 
       <div id="button-container">
-      Sort by:
+        Sort by:
         <button class="sort-button" data-column="date" data-order="asc">Date↑↓</button>
       </div>
 
       <!-- marker listを表示 -->
       {% if session["marker_list"] %}
       <table id="detail-table-pc">
-       
-       
-        {% for marker in session["marker_list"] %}
-            <tr class="vertical-row" id="marker-row-{{ marker['locationid'] }}" onclick="centerMapOnMarker({{ marker['lat'] }}, {{ marker['lng'] }})">
-                <th scope="row">{{ marker["label"] }}</th>
-                <td>{{ marker["description"] }}</td>
-                <td>{{ marker["date"] | get_date_time }}</td>
-                {% if marker["image_urls"] %}
-                <td>
-                  <button onclick="toggleImages('image-{{ marker['locationid'] }}')">画像表示/隠す</button>
 
-                    <div class="image-container" id="image-{{ marker['locationid'] }}" style="display: none;">
-                        {% for image_url in marker["image_urls"] %}
-                        <img id="marker-image" src="{{ image_url }}" alt="Marker Image">
-                        {% endfor %}
-                    </div>
-                </td>
-                {% else %}
-                <td>No Image</td>
-                {% endif %}
-            </tr>
+
+        {% for marker in session["marker_list"] %}
+        <tr class="vertical-row" id="marker-row-{{ marker['locationid'] }}"
+          onclick="centerMapOnMarker({{ marker['lat'] }}, {{ marker['lng'] }})">
+          <th scope="row">{{ marker["label"] }}</th>
+          <td>{{ marker["description"] }}</td>
+          <td>{{ marker["date"] | get_date_time }}</td>
+          {% if marker["image_urls"] %}
+          <td>
+            <button onclick="toggleImages('image-{{ marker['locationid'] }}')">画像表示/隠す</button>
+
+            <div class="image-container" id="image-{{ marker['locationid'] }}" style="display: none;">
+              {% for image_url in marker["image_urls"] %}
+              <img id="marker-image" src="{{ image_url }}" alt="Marker Image">
+              {% endfor %}
+            </div>
+          </td>
+          {% else %}
+          <td>No Image</td>
+          {% endif %}
+        </tr>
         {% endfor %}
       </table>
-    {% endif %}
+      {% endif %}
 
     </div>
 
@@ -119,12 +121,12 @@
   </div>
 
   <script>
-      let mapParams = {
-        lat: {{ session["lat"] }},
-        lng: {{ session["lng"] }},
-        zoom: 15,
-        mapMarkers: {{ session["marker_list"] | tojson | safe }}
-      };
+    let mapParams = {
+      lat: {{ session["lat"] }},
+      lng: {{ session["lng"] }},
+      zoom: {{ zoom }},
+      mapMarkers: {{ session["marker_list"] | tojson | safe }}
+    };
   </script>
   <!-- Googleマップを操作するためのJavaScriptファイル -->
   <script src="../static/js/my-map.js"></script>

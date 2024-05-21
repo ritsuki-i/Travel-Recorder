@@ -1,99 +1,93 @@
 <!DOCTYPE html>
-    
-    <head>
-        <title>TravelRecorder-Login</title>
-        <meta charset="UTF -8">
-        <link rel="stylesheet" href="../static/css/login.css">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="../static/js/authenthication.js" defer type="module"></script>
-        
-    </head>
-    
-     <body>
-     <div>
-              <!--Waves Container-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/css/login.css">
+    <link rel="icon" href="../static/img/TravelRecorderIcon.png">
+    <script src="../static/js/authenthication.js" defer type="module"></script>
+    <title>TravelRecorder-Login</title>
+
+</head>
+
+<body>
+    <div>
+        <!--Waves Container-->
         <div>
             <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-            viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
-            <defs>
-            <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
-            </defs>
-            <g class="parallax">
-            <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
-            <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
-            <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
-            <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
-            </g>
+                viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <defs>
+                    <path id="gentle-wave"
+                        d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                </defs>
+                <g class="parallax">
+                    <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+                    <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+                    <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+                    <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+                </g>
             </svg>
         </div>
         <!--Waves end-->
     </div>
-        
-        <div id="header">
-           
-            <div id="menu">
 
-                <ul>
-                    <li><a href="https://www.aoyama.ac.jp/faculty/science/">ABOUT</a></li>
-                    <li><a href="https://www.aoyama.ac.jp/faculty/science/">MEMBERS</a></li>
-                    <li><a href="https://www.aoyama.ac.jp/faculty/science/">SERVICE</a></li>
-                    <li><a href="https://www.aoyama.ac.jp/faculty/science/">CONTACT</a></li>
-                </ul>
-            </div>
+    <div id="header">
+        <div id="menu">
         </div>
+    </div>
 
-      
 
-        <div id="title">
-             <h1 id="title-text">Travel Recorder</h1>
-        </div>
-        
-       
-        
-        <div class="container">
-            
-            <div class="top-section">
 
-                <div class="email-pass-login">
-                    
-                        <div class="email-login">
-                            Mail-Address:
-                            <input type="email" id="login-email">
-                        </div>
-                        <div class="pass-login">
-                            Password:
-                            <input type="password" id="login-pass">
-                        </div>
-                
+    <div id="title">
+        <h1 id="title-text">Travel Recorder</h1>
+    </div>
+
+
+
+    <div class="container">
+
+        <div class="top-section">
+
+            <div class="email-pass-login">
+
+                <div class="email-login">
+                    Mail-Address:
+                    <input type="email" id="login-email">
                 </div>
-                
-            </div>   
-
-            <div class="bottom-section">
-                <div class="left-half">
-                    <div id="g-bordering">
-                        <button id="login-google">Login with Google</button>
-                    </div>
+                <div class="pass-login">
+                    Password:
+                    <input type="password" id="login-pass">
                 </div>
 
-                <div class="right-half">
-                    <button id="login-emailpass">LOGIN</button>
-                </div>
-        
             </div>
 
         </div>
 
-       <div class="account-bordering">
-            <form action="/create-account" method="post">
-                <button id="account" type="submit">アカウント作成</button>
-            </form>
-            <form action="/change-password" name="change-password" method="post">
-                <button id="change-password" type="submit">パスワードがわからない</button>
-            </form>
+        <div class="bottom-section">
+            <div class="left-half">
+                <div id="g-bordering">
+                    <button id="login-google">Login with Google</button>
+                </div>
+            </div>
 
-       </div>
+            <div class="right-half">
+                <button id="login-emailpass">LOGIN</button>
+            </div>
 
-        </body>
+        </div>
+
+    </div>
+
+    <div class="account-bordering">
+        <form action="/create-account" method="post">
+            <button id="account" type="submit">アカウント作成</button>
+        </form>
+        <form action="/change-password" name="change-password" method="post">
+            <button id="change-password" type="submit">パスワードがわからない</button>
+        </form>
+
+    </div>
+
+</body>
+
 </html>
