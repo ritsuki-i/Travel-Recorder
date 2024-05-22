@@ -9,6 +9,7 @@ import {
   sendEmailVerification,
   sendPasswordResetEmail,
   signInAnonymously,
+  signInWithCustomToken
 } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
 
 /*import firebaseConfig from "./loginapi.json" assert { type: "json" };*/
@@ -96,38 +97,66 @@ async function fetchFirebaseConfig() {
     });
     const guestLogin = document.getElementById("guest-account");
     guestLogin?.addEventListener("click", () => {
-      signInAnonymously(auth)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          const userId = user.uid; // ユーザーIDの取得
-          const userEmail = user.email || ""; // 匿名ユーザーの場合、メールアドレスはないかもしれません
-
-          fetch("/to-my-map-guest", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ User: { uid: userId, email: userEmail } }),  // ユーザーIDとメールアドレスを送信
-          })
-            .then(response => {
-              if (!response.ok) {
-                return response.text().then(text => { throw new Error(text) });
-              }
-              return response.json();
-            })
-            .then(data => {
-              console.log("Data from Python:", data);
-              window.location.href = "/to-my-map";
-            })
-            .catch(error => {
-              console.error("Error:", error);
-              alert("An error occurred: " + error.message);
-            });
+      const storedUid = localStorage.getItem('anonymousUid');
+      if (storedUid) {
+        // 以前のUIDが存在する場合、そのUIDを再利用
+        console.log("Logged in with existing UID:", storedUid);
+        fetch("/to-my-map-guest", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ User: { uid: storedUid, email: 'Guest-User' } }),  // ユーザーIDを送信
         })
-        .catch(error => {
-          console.error("Error signing in anonymously:", error);
-          alert("An error occurred during sign in: " + error.message);
-        });
+          .then(response => {
+            if (!response.ok) {
+              return response.text().then(text => { throw new Error(text) });
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log("Data from Python:", data);
+            window.location.href = "/to-my-map";
+          })
+          .catch(error => {
+            console.error("Error:", error);
+            alert("An error occurred: " + error.message);
+          });
+      } else {
+        // 新しい匿名アカウントを生成
+        signInAnonymously(auth)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            console.log("Anonymous User ID:", user.uid);
+            // UIDをLocal Storageに保存
+            localStorage.setItem('anonymousUid', user.uid);
+            fetch("/to-my-map-guest", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ User: { uid: user.uid, email: 'Guest-User' } }),  // ユーザーIDを送信
+            })
+              .then(response => {
+                if (!response.ok) {
+                  return response.text().then(text => { throw new Error(text) });
+                }
+                return response.json();
+              })
+              .then(data => {
+                console.log("Data from Python:", data);
+                window.location.href = "/to-my-map";
+              })
+              .catch(error => {
+                console.error("Error:", error);
+                alert("An error occurred: " + error.message);
+              });
+          })
+          .catch(error => {
+            console.error("Error signing in anonymously:", error);
+            alert("An error occurred during sign in: " + error.message);
+          });
+      }
     });
 
     const inputEmail = document.getElementById("input-email");
