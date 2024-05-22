@@ -5,6 +5,7 @@ html {
 }
 
 body {
+   width: 100vw;
    margin: 0;
    /*background: linear-gradient(to bottom, #004f80,#008080 );*/
    background: linear-gradient(to right, #004f80, #008080);
@@ -132,7 +133,7 @@ p {
    border: 1px solid black;
    padding: 8px;
    width: 27vw;
-   overflow-wrap:break-word;
+   overflow-wrap: break-word;
 }
 
 /* Ensure images do not exceed cell width */
@@ -245,17 +246,20 @@ input[type="file"] {
    display: none;
 }
 
-#switch-btn-phone{
+#switch-btn-phone {
    display: none;
 }
 
 td button {
-  display: block;
-  margin: 0 auto;
+   display: block;
+   margin: 0 auto;
    font-family: 'Courier New', Courier, monospace;
-  background-color: white; /* Green background */
-  border: 1px black; /* Remove borders */
-  cursor: pointer; /* Add a pointer cursor on hover */
+   background-color: white;
+   /* Green background */
+   border: 1px black;
+   /* Remove borders */
+   cursor: pointer;
+   /* Add a pointer cursor on hover */
 }
 
 
@@ -328,29 +332,29 @@ td button {
       margin-bottom: 20px;
    }
 
-   #detail-table-pc{
+   #detail-table-pc {
       table-layout: fixed;
    }
 
-   #switch-btn-phone{
+   #switch-btn-phone {
       display: block;
       text-align: center;
       margin: 2vh 0;
    }
 
-   #switch-btn-phone button{
+   #switch-btn-phone button {
       margin: 0 20px;
    }
 
-   .invisible-element{
+   .invisible-element {
       display: none !important;
    }
 
-   .visible-element{
+   .visible-element {
       display: block;
    }
 
-   #link-btn-phone{
+   #link-btn-phone {
       margin-bottom: 10px;
    }
 
