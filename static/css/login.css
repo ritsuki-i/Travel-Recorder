@@ -304,6 +304,10 @@ body{
     color: black;
     font-weight: bold;
   }
+  #guest-account{
+    color: black;
+    font-weight: bold;
+  }
   #title{
     padding: 30px;
   }
