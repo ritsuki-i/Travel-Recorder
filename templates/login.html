@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 
-<head>
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/login.css">
     <link rel="icon" href="../static/img/TravelRecorderIcon.png">
     <script src="../static/js/authenthication.js" defer type="module"></script>
     <title>TravelRecorder-Login</title>
-
+    <meta property="og:url" content="https://travel-recorder.onrender.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Travel Recorder" />
+    <meta property="og:description" content="訪れた場所の思い出をGoogleマップに記録し、共有することができるWebアプリケーション" />
+    <meta property="og:site_name" content="Travel Recorder" />
+    <meta property="og:image" content="../static/img/TravelRecorderIcon.png" />
 </head>
 
 <body>
@@ -34,7 +39,9 @@
     <div id="header">
         <div id="menu">
             <ul>
-                <li><a href="https://github.com/ritsuki-i/Travel-Recorder" target="_blank"><img width="15" height="15" src="../static/img/linkmark.png" alt="external-link-squared" style="margin-right: 5px;"/>GitHub</a></li>
+                <li><a href="https://github.com/ritsuki-i/Travel-Recorder" target="_blank"><img width="15" height="15"
+                            src="../static/img/linkmark.png" alt="external-link-squared"
+                            style="margin-right: 5px;" />GitHub</a></li>
         </div>
     </div>
 
@@ -67,7 +74,7 @@
 
         <div class="bottom-section">
             <div class="left-half">
-                    <button id="login-google">Login with Google</button>
+                <button id="login-google">Login with Google</button>
             </div>
 
             <div class="right-half">
