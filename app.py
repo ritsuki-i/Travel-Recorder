@@ -64,7 +64,20 @@ def to_my_map():
         user.UserID = userData['User']['uid']
         firebase_db.setUser(user) #firebaseのコレクション作成＆データ入力
         return jsonify({'message': 'Success'})
-    
+
+@app.route('/to-my-map-guest', methods=['POST'])
+def to_my_map_guest():
+    if request.is_json:
+        userData = request.get_json()
+        user.UserEmail = userData['User'].get('email', 'anonymous@example.com')  # デフォルトの匿名メールアドレス
+        user.UserID = userData['User']['uid']
+        firebase_db.setUser(user)  # firebaseのコレクション作成＆データ入力
+        session["user_id"] = user.UserID
+        session["user_email"] = user.UserEmail
+        session['marker_list'] = firebase_db.get_allmarker_from_firestore(user.UserID)
+        return jsonify({'message': 'Success', 'user_id': user.UserID})
+    else:
+        return jsonify({'error': 'Unsupported Media Type'}), 415
 
 # static/js/myMap.js, templates/my-myMap.html, src/lat_lng_finder.py, app.pyのmap_page()を追加
 # 今の時点でデータベースに入れるのは[ 緯度, 経度, ユーザが入力した名前, ユーザが入力したデスクリプション ]
@@ -81,6 +94,10 @@ def map_page():
             lat_lng = get_lat_lng(location) if location else (default_lat, default_lng)
             # セッションに緯度と経度を保存
             session["lat"], session["lng"] = lat_lng if lat_lng else (default_lat, default_lng)
+
+            #session['marker_list'] = firebase_db.get_allmarker_from_firestore(user.UserID)
+            print("zoom=15")
+            return render_template("my-map.html", zoom=15)
 
         elif form_type == 'submit_location':
             # ユーザーがフォームに入力した緯度、経度、名前、説明を取得
@@ -118,7 +135,7 @@ def map_page():
     session['marker_list'] = firebase_db.get_allmarker_from_firestore(user.UserID)
 
     # マップページをレンダリング
-    return render_template("my-map.html")
+    return render_template("my-map.html", zoom=6)
 
 @app.route('/create-account', methods=['GET','POST'])
 def create_account():
